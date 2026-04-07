@@ -7,11 +7,7 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { StatisticsScreen } from '../screens/StatisticsScreen';
 import { useTheme } from '../theme/ThemeContext';
 
-const ProfileScreen = () => (
-  <View className="flex-1 bg-[#0A0A0A] justify-center items-center">
-    <Text className="text-white">Profile Screen (Coming Soon)</Text>
-  </View>
-);
+import { ProfileScreen } from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
