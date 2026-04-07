@@ -6,12 +6,24 @@ import { Button } from '../components/buttons/Button';
 import { useTheme } from '../theme/ThemeContext';
 import { useUser } from '../context/UserContext';
 import { useNavigation } from '@react-navigation/native';
+import { useExpense } from '../context/ExpenseContext';
 
 export const ProfileScreen = () => {
   const [mode, setMode] = useState<'preview' | 'edit'>('preview');
   const { theme, isDark, toggleTheme } = useTheme();
   const { profile, updateProfile, logout } = useUser();
+  const { transactions } = useExpense();
   const navigation = useNavigation<any>();
+
+  const { totalBalance, totalExpenses } = React.useMemo(() => {
+    let income = 0;
+    let expense = 0;
+    transactions.forEach(t => {
+      if (t.type === 'income') income += t.amount;
+      else expense += t.amount;
+    });
+    return { totalBalance: income - expense, totalExpenses: expense };
+  }, [transactions]);
   
   const [editName, setEditName] = useState(profile.name);
   const [editEmail, setEditEmail] = useState(profile.email);
@@ -131,8 +143,8 @@ export const ProfileScreen = () => {
           <View className="space-y-6">
             <View className="flex-row items-center">
               <Text className="text-base mr-2 font-poppins" style={{ color: theme.textSecondary }}>Total spendings:</Text>
-              <View className="px-2 py-1 rounded-lg" style={{ backgroundColor: theme.success + '20' }}>
-                <Text className="text-base font-lexendBold" style={{ color: theme.success }}>₹2,000</Text>
+              <View className="px-2 py-1 rounded-lg" style={{ backgroundColor: theme.danger + '20' }}>
+                <Text className="text-base font-lexendBold" style={{ color: theme.danger }}>₹{totalExpenses.toFixed(2).toLocaleString()}</Text>
               </View>
             </View>
 
@@ -143,7 +155,7 @@ export const ProfileScreen = () => {
 
             <View className="flex-row items-center mt-6">
               <Text className="text-base mr-2 font-poppins" style={{ color: theme.textSecondary }}>Balance :</Text>
-              <Text className="text-base font-lexendBold" style={{ color: theme.text }}>₹20,000</Text>
+              <Text className="text-base font-lexendBold" style={{ color: theme.text }}>₹{totalBalance.toFixed(2).toLocaleString()}</Text>
             </View>
           </View>
         ) : (
