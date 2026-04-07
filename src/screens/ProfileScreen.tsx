@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Switch, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/buttons/Button';
+import { useTheme } from '../theme/ThemeContext';
 
 export const ProfileScreen = () => {
   const [mode, setMode] = useState<'preview' | 'edit'>('preview');
+  const { theme, isDark, toggleTheme } = useTheme();
 
   return (
-    <SafeAreaView className="flex-1 bg-[#0A0A0A]">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       {/* Top Header */}
       <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
         <View className="flex-row items-center">
-          <View className="w-10 h-10 bg-white rounded-xl justify-center items-center mr-3">
-            <Text className="text-black font-bold text-lg">P</Text>
+          <View className="w-10 h-10 rounded-xl justify-center items-center mr-3" style={{ backgroundColor: theme.text }}>
+            <Text className="font-bold text-lg" style={{ color: theme.background }}>L</Text>
           </View>
-          <Text className="text-white text-xl font-bold">PayU</Text>
+          <Text className="text-xl font-bold" style={{ color: theme.text }}>Ledger</Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity className="mr-4">
-            <Icon name="search-outline" size={24} color="#FAFAFA" />
+            <Icon name="search-outline" size={24} color={theme.text} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Icon name="notifications-outline" size={24} color="#FAFAFA" />
-            <View className="absolute -top-1 -right-1 bg-red-500 w-4 h-4 rounded-full justify-center items-center">
-              <Text className="text-white text-[10px] font-bold">2</Text>
+            <View className="relative">
+              <Icon name="notifications-outline" size={24} color={theme.text} />
+              <View className="absolute -top-1 -right-1 bg-red-500 w-4 h-4 rounded-full justify-center items-center border-[1px]" style={{ borderColor: theme.background }}>
+                <Text className="text-white text-[8px] font-bold">2</Text>
+              </View>
             </View>
           </TouchableOpacity>
         </View>
@@ -32,26 +36,65 @@ export const ProfileScreen = () => {
 
       <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 100 }} keyboardShouldPersistTaps="handled">
         {/* Profile Card / Row */}
-        <View className="flex-row items-center mb-8">
-          <View className="w-12 h-12 bg-white rounded-xl justify-center items-center mr-4">
-            <Text className="text-black font-bold text-xl">P</Text>
-          </View>
-          <Text className="text-white text-xl font-bold">Alex yu</Text>
+        <View className="flex-row items-center justify-between mb-8">
+            <View className="flex-row items-center">
+                <View className="w-12 h-12 rounded-xl justify-center items-center mr-4" style={{ backgroundColor: theme.text }}>
+                    <Text className="font-bold text-xl" style={{ color: theme.background }}>s</Text>
+                </View>
+                <Text className="text-xl font-bold" style={{ color: theme.text }}>Striver</Text>
+            </View>
+        </View>
+
+        {/* Settings Section */}
+        <View className="mb-8 p-4 rounded-3xl" style={{ backgroundColor: theme.card }}>
+            <View className="flex-row items-center justify-between">
+                <View className="flex-row items-center">
+                    <View className="w-10 h-10 rounded-xl items-center justify-center mr-3" style={{ backgroundColor: theme.surface }}>
+                        <Icon name={isDark ? "moon" : "sunny"} size={20} color={theme.text} />
+                    </View>
+                    <Text className="text-base font-semibold" style={{ color: theme.text }}>Dark Mode</Text>
+                </View>
+                <Switch 
+                    value={isDark} 
+                    onValueChange={toggleTheme}
+                    trackColor={{ false: '#767577', true: theme.success }}
+                    thumbColor={Platform.OS === 'ios' ? undefined : '#f4f3f4'}
+                />
+            </View>
         </View>
 
         {/* Segmented Control */}
-        <View className="flex-row bg-[#111111] border-[1px] border-[#2A2A2A] rounded-full p-1 mb-8">
+        <View 
+          className="flex-row rounded-full p-1 mb-8" 
+          style={{ backgroundColor: theme.surface, borderWidth: 1, borderColor: theme.border }}
+        >
           <TouchableOpacity 
             onPress={() => setMode('preview')}
-            className={`flex-1 py-3 rounded-full items-center ${mode === 'preview' ? 'bg-white' : ''}`}
+            className="flex-1 py-3 rounded-full items-center"
+            style={mode === 'preview' ? { 
+              backgroundColor: theme.card,
+              elevation: 2,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.1,
+              shadowRadius: 2,
+            } : {}}
           >
-            <Text className={`font-bold ${mode === 'preview' ? 'text-black' : 'text-[#A3A3A3]'}`}>Preview</Text>
+            <Text className="font-bold" style={{ color: mode === 'preview' ? theme.text : theme.textSecondary }}>Preview</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => setMode('edit')}
-            className={`flex-1 py-3 rounded-full items-center ${mode === 'edit' ? 'bg-white' : ''}`}
+            className="flex-1 py-3 rounded-full items-center"
+            style={mode === 'edit' ? { 
+              backgroundColor: theme.card,
+              elevation: 2,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.1,
+              shadowRadius: 2,
+            } : {}}
           >
-            <Text className={`font-bold ${mode === 'edit' ? 'text-black' : 'text-[#A3A3A3]'}`}>Edit</Text>
+            <Text className="font-bold" style={{ color: mode === 'edit' ? theme.text : theme.textSecondary }}>Edit</Text>
           </TouchableOpacity>
         </View>
 
@@ -59,33 +102,26 @@ export const ProfileScreen = () => {
         {mode === 'preview' ? (
           <View className="space-y-6">
             <View className="flex-row items-center">
-              <Text className="text-[#FAFAFA] text-base mr-2">Total spendings:</Text>
-              <View className="border border-green-500 px-1 py-0.5 rounded-sm bg-green-500/20">
-                <Text className="text-white text-base font-bold">₹2000</Text>
+              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Total spendings:</Text>
+              <View className="px-2 py-1 rounded-lg" style={{ backgroundColor: theme.success + '20' }}>
+                <Text className="text-base font-bold" style={{ color: theme.success }}>₹2,000</Text>
               </View>
             </View>
 
             <View className="flex-row items-center mt-6">
-              <Text className="text-[#A3A3A3] text-base mr-2">Email :</Text>
-              <Text className="text-white text-base">aman@gmail.com</Text>
+              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Email :</Text>
+              <Text className="text-base font-medium" style={{ color: theme.text }}>striver@gmail.com</Text>
             </View>
 
             <View className="flex-row items-center mt-6">
-              <Text className="text-[#A3A3A3] text-base mr-2">Balance :</Text>
-              <Text className="text-white text-base font-bold">₹20000</Text>
+              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Balance :</Text>
+              <Text className="text-base font-bold" style={{ color: theme.text }}>₹20,000</Text>
             </View>
           </View>
         ) : (
           <View>
-            <Input label="Full Name" placeholder="Enter your full name" defaultValue="Aman Kumar" />
-            <Input label="Email" placeholder="Enter your email" defaultValue="aman@gmail.com" keyboardType="email-address" />
-            <Input 
-              label="Password" 
-              placeholder="Create a password" 
-              secureTextEntry 
-              rightIcon={<Icon name="eye-outline" size={20} color="#A3A3A3" />}
-            />
-            <Input label="Confirm Password" placeholder="Confirm your password" secureTextEntry />
+            <Input label="Full Name" placeholder="Enter your full name" defaultValue="Striver" />
+            <Input label="Email" placeholder="Enter your email" defaultValue="striver@gmail.com" keyboardType="email-address" />
             
             <View className="mt-4">
               <Button title="Update Details" onPress={() => setMode('preview')} />

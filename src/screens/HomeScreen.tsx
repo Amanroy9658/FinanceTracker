@@ -4,11 +4,14 @@ import { useTheme } from '../theme/ThemeContext';
 import { useExpense } from '../context/ExpenseContext';
 import { GradientCard } from '../components/cards/GradientCard';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Transaction } from '../types';
+import { TransactionItem } from '../components/cards/TransactionItem';
+import { EmptyState } from '../components/ui/EmptyState';
+import { useNavigation } from '@react-navigation/native';
 
 export const HomeScreen = () => {
   const { theme } = useTheme();
   const { transactions, categories, deleteTransaction } = useExpense();
+  const navigation = useNavigation<any>();
 
   const { totalIncome, totalExpense, balance } = useMemo(() => {
     let inc = 0, exp = 0;
@@ -18,44 +21,6 @@ export const HomeScreen = () => {
     });
     return { totalIncome: inc, totalExpense: exp, balance: inc - exp };
   }, [transactions]);
-
-  const renderTransaction = ({ item }: { item: Transaction }) => {
-    const category = categories.find(c => c.id === item.categoryId);
-    const isIncome = item.type === 'income';
-
-    return (
-      <View 
-        className="flex-row items-center p-4 rounded-2xl mb-3 border-[1px]"
-        style={{ backgroundColor: theme.card, borderColor: theme.border }}
-      >
-        <View 
-          className="w-11 h-11 rounded-full justify-center items-center" 
-          style={{ backgroundColor: category?.color || theme.primary }}
-        >
-          <Icon name={category?.icon || 'cash'} size={20} color="#FFF" />
-        </View>
-        <View className="flex-1 ml-4">
-          <Text className="text-base font-semibold" style={{ color: theme.text }}>
-            {category?.name || 'Unknown'}
-          </Text>
-          <Text className="text-sm mt-1" style={{ color: theme.textSecondary }}>
-            {item.note || 'No note'}
-          </Text>
-        </View>
-        <View className="items-end mr-3">
-          <Text className="text-base font-bold" style={{ color: isIncome ? theme.success : theme.danger }}>
-            {isIncome ? '+' : '-'}${item.amount.toFixed(2)}
-          </Text>
-          <Text className="text-xs mt-1" style={{ color: theme.textSecondary }}>
-            {new Date(item.date).toLocaleDateString()}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={() => deleteTransaction(item.id)} className="p-1 justify-center items-center">
-          <Icon name="trash-outline" size={20} color={theme.danger} />
-        </TouchableOpacity>
-      </View>
-    );
-  };
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
@@ -84,18 +49,29 @@ export const HomeScreen = () => {
       </View>
 
       {transactions.length === 0 ? (
-        <View className="flex-1 justify-center items-center mt-5">
-          <Icon name="receipt-outline" size={50} color={theme.textSecondary} />
-          <Text className="mt-3 text-base" style={{ color: theme.textSecondary }}>No transactions yet</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={transactions}
-          keyExtractor={(item) => item.id}
-          renderItem={renderTransaction}
-          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
+        <EmptyState 
+          title="No transactions yet"
+          description="Start tracking your finances by adding your first income or expense entry."
+          iconName="receipt-outline"
+          actionLabel="Add Transaction"
+          onAction={() => navigation.navigate('AddEntry')}
         />
+      ) : (
+        <View className="flex-1">
+          <FlatList
+            data={transactions}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TransactionItem 
+                item={item} 
+                category={categories.find(c => c.id === item.categoryId)} 
+                onDelete={(id) => deleteTransaction(id)} 
+              />
+            )}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 120 }}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       )}
     </View>
   );

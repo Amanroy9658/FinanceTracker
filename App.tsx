@@ -6,15 +6,19 @@ import { ThemeProvider } from './src/theme/ThemeContext';
 import { ExpenseProvider } from './src/context/ExpenseContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <ThemeProvider>
-        <ExpenseProvider>
-          <AppNavigator />
-        </ExpenseProvider>
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <ExpenseProvider>
+            <AppNavigator />
+          </ExpenseProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 

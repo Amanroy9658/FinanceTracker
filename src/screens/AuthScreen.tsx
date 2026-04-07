@@ -38,9 +38,9 @@ export const AuthScreen = () => {
         {/* Logo / Header */}
         <View className="items-center mb-8">
           <View className="w-16 h-16 bg-white rounded-2xl justify-center items-center mb-6">
-            <Text className="text-black font-bold text-3xl">P</Text>
+            <Text className="text-black font-bold text-3xl">L</Text>
           </View>
-          <Text className="text-white text-2xl font-bold mb-2">Welcome to PayU</Text>
+          <Text className="text-white text-2xl font-bold mb-2">Welcome to Ledger</Text>
           <Text className="text-[#A3A3A3] text-center px-4">Send money globally with the real exchange rate</Text>
         </View>
 
