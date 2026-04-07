@@ -4,9 +4,9 @@ import {
   Text, 
   ScrollView, 
   TouchableOpacity, 
-  SafeAreaView, 
   StatusBar 
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../theme/ThemeContext';
 import { useExpense } from '../context/ExpenseContext';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,6 +14,7 @@ import { GaugeChart } from '../components/ui/GaugeChart';
 import { CurrencyCard } from '../components/ui/CurrencyCard';
 import { SpendingBarChart } from '../components/ui/SpendingBarChart';
 import Animated, { FadeInUp } from 'react-native-reanimated';
+import { IndianRupee, Dollarsign } from 'react-native-vector-icons';
 
 export const BalancesScreen = () => {
   const { theme } = useTheme();
@@ -27,9 +28,9 @@ export const BalancesScreen = () => {
       <View className="px-5 py-4 flex-row justify-between items-center bg-[#0A0A0A]/50">
         <View className="flex-row items-center">
             <View className="bg-white p-1 rounded-lg mr-3 w-8 h-8 items-center justify-center">
-                <Text className="text-[#0A0A0A] font-bold text-xl">P</Text>
+                <Text className="text-[#0A0A0A] font-bold text-xl">L</Text>
             </View>
-            <Text className="text-white text-xl font-bold">PayU</Text>
+            <Text className="text-white text-xl font-bold">Ledger</Text>
         </View>
         <View className="flex-row items-center gap-x-5">
             <TouchableOpacity>
@@ -68,9 +69,9 @@ export const BalancesScreen = () => {
             </View>
             
             <CurrencyCard 
-                flag="🇨🇦" 
-                code="CAD" 
-                name="Canadian Dollar" 
+                flag="🇮🇳" 
+                code="IN" 
+                name="Indian Ruppee 
                 isStarred 
             />
         </Animated.View>

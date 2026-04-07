@@ -14,6 +14,8 @@ interface ExpenseContextProps {
   categories: Category[];
   addTransaction: (t: Transaction) => void;
   deleteTransaction: (id: string) => void;
+  addCategory: (c: Category) => void;
+  deleteCategory: (id: string) => void;
   isLoading: boolean;
 }
 
@@ -22,6 +24,8 @@ const ExpenseContext = createContext<ExpenseContextProps>({
   categories: [],
   addTransaction: () => {},
   deleteTransaction: () => {},
+  addCategory: () => {},
+  deleteCategory: () => {},
   isLoading: true,
 });
 
@@ -60,8 +64,20 @@ export const ExpenseProvider: React.FC<{children: React.ReactNode}> = ({ childre
     await saveTransactions(updated);
   };
 
+  const addCategory = async (c: Category) => {
+    const updated = [...categories, c];
+    setCategories(updated);
+    await saveCategories(updated);
+  };
+
+  const deleteCategory = async (id: string) => {
+    const updated = categories.filter(c => c.id !== id);
+    setCategories(updated);
+    await saveCategories(updated);
+  };
+
   return (
-    <ExpenseContext.Provider value={{ transactions, categories, addTransaction, deleteTransaction, isLoading }}>
+    <ExpenseContext.Provider value={{ transactions, categories, addTransaction, deleteTransaction, addCategory, deleteCategory, isLoading }}>
       {children}
     </ExpenseContext.Provider>
   );

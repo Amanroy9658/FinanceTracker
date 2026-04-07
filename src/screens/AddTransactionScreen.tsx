@@ -115,6 +115,17 @@ export const AddTransactionScreen = ({ navigation }: any) => {
             </TouchableOpacity>
           );
         })}
+        {/* Add New Category Button */}
+        <TouchableOpacity 
+          className="w-[48%] p-4 rounded-xl border-[1px] border-dashed items-center justify-center mb-3"
+          style={{ backgroundColor: theme.card, borderColor: theme.textSecondary }}
+          onPress={() => navigation.navigate('AddCategory')}
+        >
+          <Icon name="add-circle-outline" size={24} color={theme.textSecondary} />
+          <Text className="mt-2 text-sm font-semibold" style={{ color: theme.textSecondary }}>
+            Add New
+          </Text>
+        </TouchableOpacity>
       </View>
       {errors.categoryId && touched.categoryId && (
         <Text className="text-red-500 text-xs mb-4 ml-1">{errors.categoryId}</Text>
