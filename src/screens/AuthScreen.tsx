@@ -19,6 +19,7 @@ export const AuthScreen = () => {
 
   // Alert Modal State
   const [alertVisible, setAlertVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'info'}>({
     title: '',
     message: '',
@@ -47,6 +48,7 @@ export const AuthScreen = () => {
     { fullName: '', email: '', password: '', confirmPassword: '' },
     validationSchema,
     async (formValues) => {
+      setLoading(true);
       try {
         const storedUsers = await AsyncStorage.getItem('registered_users');
         const users = storedUsers ? JSON.parse(storedUsers) : [];
@@ -54,6 +56,7 @@ export const AuthScreen = () => {
         if (mode === 'signup') {
           // Check if user already exists
           if (users.find((u: any) => u.email.toLowerCase() === formValues.email.toLowerCase())) {
+            setLoading(false);
             showAlert('Registration Error', 'An account with this email already exists.', 'error');
             return;
           }
@@ -77,11 +80,13 @@ export const AuthScreen = () => {
           );
 
           if (!registeredUser) {
+            setLoading(false);
             showAlert('User Not Found', 'This email is not registered. Please sign up first to create an account.', 'info');
             return;
           }
 
           if (registeredUser.password !== formValues.password) {
+            setLoading(false);
             showAlert('Login Error', 'The password you entered is incorrect. Please try again.', 'error');
             return;
           }
@@ -91,6 +96,7 @@ export const AuthScreen = () => {
           navigation.replace('MainTabs');
         }
       } catch (e) {
+        setLoading(false);
         console.error('Auth Error', e);
         showAlert('System Error', 'Could not complete the request. Please try again later.', 'error');
       }
@@ -207,6 +213,7 @@ export const AuthScreen = () => {
             <Button 
               title={mode === 'signin' ? "Sign In" : "Create Account"} 
               onPress={handleSubmit} 
+              loading={loading}
             />
           </View>
         </View>
