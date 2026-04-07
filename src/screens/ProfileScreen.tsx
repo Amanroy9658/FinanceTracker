@@ -4,10 +4,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/buttons/Button';
 import { useTheme } from '../theme/ThemeContext';
+import { useUser } from '../context/UserContext';
 
 export const ProfileScreen = () => {
   const [mode, setMode] = useState<'preview' | 'edit'>('preview');
   const { theme, isDark, toggleTheme } = useTheme();
+  const { profile, updateProfile } = useUser();
+  
+  const [editName, setEditName] = useState(profile.name);
+  const [editEmail, setEditEmail] = useState(profile.email);
+
+  const handleUpdate = () => {
+    updateProfile({ name: editName, email: editEmail });
+    setMode('preview');
+  };
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
@@ -15,7 +25,9 @@ export const ProfileScreen = () => {
       <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
         <View className="flex-row items-center">
           <View className="w-10 h-10 rounded-xl justify-center items-center mr-3" style={{ backgroundColor: theme.text }}>
-            <Text className="font-bold text-lg" style={{ color: theme.background }}>L</Text>
+            <Text className="font-bold text-lg" style={{ color: theme.background }}>
+              {profile.name ? profile.name.charAt(0).toUpperCase() : 'L'}
+            </Text>
           </View>
           <Text className="text-xl font-bold" style={{ color: theme.text }}>Ledger</Text>
         </View>
@@ -39,9 +51,11 @@ export const ProfileScreen = () => {
         <View className="flex-row items-center justify-between mb-8">
             <View className="flex-row items-center">
                 <View className="w-12 h-12 rounded-xl justify-center items-center mr-4" style={{ backgroundColor: theme.text }}>
-                    <Text className="font-bold text-xl" style={{ color: theme.background }}>s</Text>
+                    <Text className="font-bold text-xl" style={{ color: theme.background }}>
+                      {profile.name ? profile.name.charAt(0).toLowerCase() : 's'}
+                    </Text>
                 </View>
-                <Text className="text-xl font-bold" style={{ color: theme.text }}>Striver</Text>
+                <Text className="text-xl font-bold" style={{ color: theme.text }}>{profile.name}</Text>
             </View>
         </View>
 
@@ -83,7 +97,11 @@ export const ProfileScreen = () => {
             <Text className="font-bold" style={{ color: mode === 'preview' ? theme.text : theme.textSecondary }}>Preview</Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            onPress={() => setMode('edit')}
+            onPress={() => {
+              setEditName(profile.name);
+              setEditEmail(profile.email);
+              setMode('edit');
+            }}
             className="flex-1 py-3 rounded-full items-center"
             style={mode === 'edit' ? { 
               backgroundColor: theme.card,
@@ -110,7 +128,7 @@ export const ProfileScreen = () => {
 
             <View className="flex-row items-center mt-6">
               <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Email :</Text>
-              <Text className="text-base font-medium" style={{ color: theme.text }}>striver@gmail.com</Text>
+              <Text className="text-base font-medium" style={{ color: theme.text }}>{profile.email}</Text>
             </View>
 
             <View className="flex-row items-center mt-6">
@@ -120,11 +138,22 @@ export const ProfileScreen = () => {
           </View>
         ) : (
           <View>
-            <Input label="Full Name" placeholder="Enter your full name" defaultValue="Striver" />
-            <Input label="Email" placeholder="Enter your email" defaultValue="striver@gmail.com" keyboardType="email-address" />
+            <Input 
+              label="Full Name" 
+              placeholder="Enter your full name" 
+              value={editName}
+              onChangeText={setEditName}
+            />
+            <Input 
+              label="Email" 
+              placeholder="Enter your email" 
+              keyboardType="email-address" 
+              value={editEmail}
+              onChangeText={setEditEmail}
+            />
             
             <View className="mt-4">
-              <Button title="Update Details" onPress={() => setMode('preview')} />
+              <Button title="Update Details" onPress={handleUpdate} />
             </View>
           </View>
         )}

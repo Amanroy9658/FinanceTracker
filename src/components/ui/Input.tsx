@@ -21,13 +21,14 @@ export const Input: React.FC<InputProps> = ({
     <View className="mb-4">
       <Text className="text-white text-sm font-semibold mb-2">{label}</Text>
       <View 
-        className={`bg-[#111111] border-[1px] rounded-xl flex-row items-center px-4 h-14 ${
+        className={`bg-[#111111] border-[1px] rounded-xl flex-row px-4 ${
           showError ? 'border-red-500' : 'border-[#2A2A2A]'
-        }`}
+        } ${props.multiline ? 'py-2' : 'items-center h-14'}`}
       >
         <TextInput 
           className="flex-1 text-white text-base"
           placeholderTextColor="#A3A3A3"
+          textAlignVertical="center"
           {...props}
         />
         {rightIcon && <View className="ml-2">{rightIcon}</View>}

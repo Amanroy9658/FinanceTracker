@@ -33,10 +33,10 @@ export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({
       <View className="flex-row items-end justify-between" style={{ height: chartHeight }}>
         {/* Y-Axis labels */}
         <View className="mr-5 justify-between h-full py-1">
-          <Text className="text-gray-600 text-[10px]">$1000</Text>
-          <Text className="text-gray-600 text-[10px]">$500</Text>
-          <Text className="text-gray-600 text-[10px]">$200</Text>
-          <Text className="text-gray-600 text-[10px]">$0</Text>
+          <Text className="text-gray-600 text-[10px]">₹1000</Text>
+          <Text className="text-gray-600 text-[10px]">₹500</Text>
+          <Text className="text-gray-600 text-[10px]">₹200</Text>
+          <Text className="text-gray-600 text-[10px]">₹0</Text>
         </View>
         
         {/* Bars */}
@@ -69,8 +69,8 @@ export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({
         </View>
         <View className="flex-row items-center">
           <Text className="text-[#818CF8] font-bold text-sm">
-            ${current.toFixed(2)}
-            <Text className="text-gray-600 font-normal"> / ${total.toFixed(2)}</Text>
+            ₹{current.toFixed(2)}
+            <Text className="text-gray-600 font-normal"> / ₹{total.toFixed(2)}</Text>
           </Text>
         </View>
       </View>

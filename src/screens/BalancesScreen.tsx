@@ -20,6 +20,20 @@ export const BalancesScreen = () => {
   const { theme } = useTheme();
   const { transactions } = useExpense();
 
+  const { currentMonthTotal } = React.useMemo(() => {
+    const now = new Date();
+    const current = (transactions || []).reduce((acc: number, t: any) => {
+      const tDate = new Date(t.date);
+      if (t.type === 'expense' && 
+          tDate.getMonth() === now.getMonth() && 
+          tDate.getFullYear() === now.getFullYear()) {
+        return acc + t.amount;
+      }
+      return acc;
+    }, 0);
+    return { currentMonthTotal: current };
+  }, [transactions]);
+
   return (
     <SafeAreaView className="flex-1 bg-[#0A0A0A]">
       <StatusBar barStyle="light-content" />
@@ -70,7 +84,7 @@ export const BalancesScreen = () => {
             
             <CurrencyCard 
                 flag="🇮🇳" 
-                code="IN" 
+                code="INR" 
                 name="Indian Rupee" 
                 isStarred 
             />
@@ -79,9 +93,9 @@ export const BalancesScreen = () => {
         {/* Bar Chart Section */}
         <Animated.View entering={FadeInUp.delay(400)} className="mt-5 pb-32">
             <SpendingBarChart 
-                current={350.00} 
-                total={640.00} 
-                label="April Spendings" 
+                current={currentMonthTotal} 
+                total={10000} 
+                label={`${new Date().toLocaleString('default', { month: 'long' })} Spendings`} 
             />
         </Animated.View>
       </ScrollView>

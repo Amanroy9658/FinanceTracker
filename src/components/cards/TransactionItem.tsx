@@ -67,7 +67,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           </View>
           <View className="items-end mr-2">
             <Text className="text-base font-bold" style={{ color: isIncome ? theme.success : theme.danger }}>
-              {isIncome ? '+' : '-'}${item.amount.toFixed(2)}
+              {isIncome ? '+' : '-'}₹{item.amount.toFixed(2)}
             </Text>
             <Text className="text-[10px] mt-1" style={{ color: theme.textSecondary }}>
               {new Date(item.date).toLocaleDateString()}

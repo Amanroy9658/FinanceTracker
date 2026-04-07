@@ -26,7 +26,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
     { 
       amount: '', 
       categoryId: filteredCategories[0]?.id || '', 
-      date: new Date().toLocaleDateString(), 
+      date: new Date().toISOString().split('T')[0], 
       note: '' 
     },
     validationSchema,
@@ -135,7 +135,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
         label="Note (Optional)"
         placeholder="What was this for?"
         multiline
-        style={{ height: 80, textAlignVertical: 'top', paddingTop: 12 }}
+        style={{ height: 40 }}
         value={values.note}
         onChangeText={(val) => handleChange('note', val)}
       />
@@ -145,7 +145,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
         style={{ backgroundColor: theme.primary }}
         onPress={handleSubmit}
       >
-        <Text className="text-white text-lg font-bold">Save Entry</Text>
+        <Text className="text-black text-lg font-bold">Save Entry</Text>
       </TouchableOpacity>
     </KeyboardAwareScrollView>
   );
