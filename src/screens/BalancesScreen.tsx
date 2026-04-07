@@ -14,7 +14,7 @@ import { GaugeChart } from '../components/ui/GaugeChart';
 import { CurrencyCard } from '../components/ui/CurrencyCard';
 import { SpendingBarChart } from '../components/ui/SpendingBarChart';
 import Animated, { FadeInUp } from 'react-native-reanimated';
-import { IndianRupee, Dollarsign } from 'react-native-vector-icons';
+
 
 export const BalancesScreen = () => {
   const { theme } = useTheme();
@@ -71,7 +71,7 @@ export const BalancesScreen = () => {
             <CurrencyCard 
                 flag="🇮🇳" 
                 code="IN" 
-                name="Indian Ruppee 
+                name="Indian Rupee" 
                 isStarred 
             />
         </Animated.View>
