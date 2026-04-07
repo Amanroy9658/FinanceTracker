@@ -61,24 +61,24 @@ export const ProfileScreen = () => {
             <View className="flex-row items-center">
               <Text className="text-[#FAFAFA] text-base mr-2">Total spendings:</Text>
               <View className="border border-green-500 px-1 py-0.5 rounded-sm bg-green-500/20">
-                <Text className="text-white text-base font-bold">$2000</Text>
+                <Text className="text-white text-base font-bold">₹2000</Text>
               </View>
             </View>
 
             <View className="flex-row items-center mt-6">
               <Text className="text-[#A3A3A3] text-base mr-2">Email :</Text>
-              <Text className="text-white text-base">alex@gmail.com</Text>
+              <Text className="text-white text-base">aman@gmail.com</Text>
             </View>
 
             <View className="flex-row items-center mt-6">
               <Text className="text-[#A3A3A3] text-base mr-2">Balance :</Text>
-              <Text className="text-white text-base font-bold">$20000</Text>
+              <Text className="text-white text-base font-bold">₹20000</Text>
             </View>
           </View>
         ) : (
           <View>
-            <Input label="Full Name" placeholder="Enter your full name" defaultValue="Alex yu" />
-            <Input label="Email" placeholder="Enter your email" defaultValue="alex@gmail.com" keyboardType="email-address" />
+            <Input label="Full Name" placeholder="Enter your full name" defaultValue="Aman Kumar" />
+            <Input label="Email" placeholder="Enter your email" defaultValue="aman@gmail.com" keyboardType="email-address" />
             <Input 
               label="Password" 
               placeholder="Create a password" 
