@@ -7,26 +7,30 @@ interface CurrencyCardProps {
   flag: string;
   code: string;
   name: string;
+  amount: number;
   isStarred?: boolean;
-  onEnable?: () => void;
+  onPress?: () => void;
 }
 
 export const CurrencyCard: React.FC<CurrencyCardProps> = ({ 
   flag, 
   code, 
   name, 
+  amount,
   isStarred = false,
-  onEnable 
+  onPress 
 }) => {
   const { theme } = useTheme();
 
   return (
-    <View 
-      className="p-4 rounded-3xl border mb-4 flex-row items-center justify-between"
+    <TouchableOpacity 
+      onPress={onPress}
+      activeOpacity={0.7}
+      className="p-5 rounded-3xl border mb-4 flex-row items-center justify-between"
       style={{ backgroundColor: '#1A1A1A', borderColor: '#2A2A2A' }}
     >
       <View className="flex-row items-center">
-        <View className="w-10 h-10 rounded-full bg-[#2A2A2A] items-center justify-center mr-4">
+        <View className="w-11 h-11 rounded-full bg-[#2A2A2A] items-center justify-center mr-4">
           <Text className="text-2xl">{flag}</Text>
         </View>
         <View>
@@ -35,18 +39,10 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
         </View>
       </View>
       
-      <View className="flex-row items-center gap-x-4">
-        <TouchableOpacity>
-          <Icon name={isStarred ? "star" : "star-outline"} size={22} color={isStarred ? "#F59E0B" : "#4B5563"} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          onPress={onEnable}
-          className="px-5 py-2 rounded-xl bg-[#2A2A2A]"
-        >
-          <Text className="text-white text-sm font-semibold">+ Enable</Text>
-        </TouchableOpacity>
+      <View className="items-end">
+        <Text className="text-white text-lg font-bold">₹{amount.toFixed(2)}</Text>
+        <Icon name={isStarred ? "star" : "star-outline"} size={18} color={isStarred ? "#F59E0B" : "#4B5563"} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

@@ -20,19 +20,43 @@ export const BalancesScreen = () => {
   const { theme } = useTheme();
   const { transactions } = useExpense();
 
-  const { currentMonthTotal } = React.useMemo(() => {
+  const { totalBalance, totalIncome, totalExpense, savingsRate, currentMonthTotal } = React.useMemo(() => {
     const now = new Date();
-    const current = (transactions || []).reduce((acc: number, t: any) => {
+    let income = 0;
+    let expense = 0;
+    let currentMonthExp = 0;
+
+    (transactions || []).forEach((t: any) => {
       const tDate = new Date(t.date);
-      if (t.type === 'expense' && 
-          tDate.getMonth() === now.getMonth() && 
-          tDate.getFullYear() === now.getFullYear()) {
-        return acc + t.amount;
+      if (t.type === 'income') {
+        income += t.amount;
+      } else {
+        expense += t.amount;
+        if (tDate.getMonth() === now.getMonth() && tDate.getFullYear() === now.getFullYear()) {
+          currentMonthExp += t.amount;
+        }
       }
-      return acc;
-    }, 0);
-    return { currentMonthTotal: current };
+    });
+
+    const balance = income - expense;
+    const sRate = income > 0 ? ((income - expense) / income) * 100 : 0;
+
+    return { 
+      totalBalance: balance, 
+      totalIncome: income, 
+      totalExpense: expense, 
+      savingsRate: Math.max(0, Math.min(100, sRate)), // Clamp between 0-100
+      currentMonthTotal: currentMonthExp 
+    };
   }, [transactions]);
+
+  const savingsTitle = React.useMemo(() => {
+    if (savingsRate > 70) return "Excellent Saving!";
+    if (savingsRate > 40) return "Healthy Savings";
+    if (savingsRate > 20) return "Average Saving";
+    if (savingsRate > 0) return "Low Saving";
+    return "Budget Exceeded!";
+  }, [savingsRate]);
 
   return (
     <SafeAreaView className="flex-1 bg-[#0A0A0A]">
@@ -66,14 +90,19 @@ export const BalancesScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Title Section */}
-        <Animated.View entering={FadeInUp.delay(100)} className="mt-8 mb-4">
+        <Animated.View entering={FadeInUp.delay(100)} className="mt-8 mb-10">
           <Text className="text-white text-3xl font-bold">Your Balances</Text>
           <Text className="text-gray-500 text-base mt-2">Manage your multi-currency accounts</Text>
         </Animated.View>
 
         {/* Gauge Chart Section */}
         <Animated.View entering={FadeInUp.delay(200)} className="items-center py-5">
-           <GaugeChart value={660} max={1000} />
+           <GaugeChart 
+            value={Math.round(savingsRate)} 
+            max={100} 
+            title={savingsTitle}
+            subtitle="Income vs Expenses Rate"
+          />
         </Animated.View>
 
         {/* Available Currencies */}
@@ -86,6 +115,7 @@ export const BalancesScreen = () => {
                 flag="🇮🇳" 
                 code="INR" 
                 name="Indian Rupee" 
+                amount={totalBalance}
                 isStarred 
             />
         </Animated.View>

@@ -9,6 +9,7 @@ interface UserProfile {
 interface UserContextProps {
   profile: UserProfile;
   updateProfile: (profile: UserProfile) => Promise<void>;
+  logout: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -20,6 +21,7 @@ const DEFAULT_PROFILE: UserProfile = {
 const UserContext = createContext<UserContextProps>({
   profile: DEFAULT_PROFILE,
   updateProfile: async () => {},
+  logout: async () => {},
   isLoading: true,
 });
 
@@ -52,8 +54,17 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({ children }
     }
   };
 
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('user_profile');
+      setProfile(DEFAULT_PROFILE);
+    } catch (e) {
+      console.error('Failed to logout', e);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ profile, updateProfile, isLoading }}>
+    <UserContext.Provider value={{ profile, updateProfile, logout, isLoading }}>
       {children}
     </UserContext.Provider>
   );

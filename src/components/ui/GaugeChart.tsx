@@ -36,13 +36,17 @@ interface GaugeChartProps {
   max: number;
   size?: number;
   strokeWidth?: number;
+  title?: string;
+  subtitle?: string;
 }
 
 export const GaugeChart: React.FC<GaugeChartProps> = ({ 
   value, 
   max, 
   size = 280, 
-  strokeWidth = 18 
+  strokeWidth = 18,
+  title = "Average",
+  subtitle = "Last Updated Now"
 }) => {
   const radius = (size - strokeWidth) / 2;
   const centerX = size / 2;
@@ -122,9 +126,9 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
       
       <View className="absolute items-center top-[30%]">
         <Text className="text-7xl font-bold text-white tracking-tighter">{value}</Text>
-        <View className="mt-4 items-center">
-            <Text className="text-gray-400 text-base font-medium">Your Credit Score is average</Text>
-            <Text className="text-gray-500 text-xs mt-1">Last Check on 21 Apr</Text>
+        <View className="mt-4 items-center px-4 text-center">
+            <Text className="text-gray-400 text-base font-semibold text-center">{title}</Text>
+            <Text className="text-gray-500 text-xs mt-1">{subtitle}</Text>
         </View>
       </View>
     </View>

@@ -1,15 +1,34 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/buttons/Button';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from '../hooks/useForm';
 import { validateEmail, validatePassword, validateRequired } from '../utils/validators';
+import { useUser } from '../context/UserContext';
+import { AlertModal } from '../components/modals/AlertModal';
 
 export const AuthScreen = () => {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigation = useNavigation<any>();
+  const { updateProfile } = useUser();
+
+  // Alert Modal State
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'info'}>({
+    title: '',
+    message: '',
+    type: 'info'
+  });
+
+  const showAlert = (title: string, message: string, type: 'success' | 'error' | 'info' = 'error') => {
+    setAlertConfig({ title, message, type });
+    setAlertVisible(true);
+  };
 
   const validationSchema = useMemo(() => ({
     email: (val: string) => validateEmail(val),
@@ -27,8 +46,54 @@ export const AuthScreen = () => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useForm(
     { fullName: '', email: '', password: '', confirmPassword: '' },
     validationSchema,
-    () => {
-      navigation.replace('MainTabs');
+    async (formValues) => {
+      try {
+        const storedUsers = await AsyncStorage.getItem('registered_users');
+        const users = storedUsers ? JSON.parse(storedUsers) : [];
+
+        if (mode === 'signup') {
+          // Check if user already exists
+          if (users.find((u: any) => u.email.toLowerCase() === formValues.email.toLowerCase())) {
+            showAlert('Registration Error', 'An account with this email already exists.', 'error');
+            return;
+          }
+
+          // Add new user
+          const newUser = {
+            fullName: formValues.fullName,
+            email: formValues.email,
+            password: formValues.password
+          };
+          users.push(newUser);
+          await AsyncStorage.setItem('registered_users', JSON.stringify(users));
+          
+          // Log in the user
+          await updateProfile({ name: newUser.fullName, email: newUser.email });
+          navigation.replace('MainTabs');
+        } else {
+          // Sign In
+          const registeredUser = users.find((u: any) => 
+            u.email.toLowerCase() === formValues.email.toLowerCase()
+          );
+
+          if (!registeredUser) {
+            showAlert('User Not Found', 'This email is not registered. Please sign up first to create an account.', 'info');
+            return;
+          }
+
+          if (registeredUser.password !== formValues.password) {
+            showAlert('Login Error', 'The password you entered is incorrect. Please try again.', 'error');
+            return;
+          }
+
+          // Successful Login
+          await updateProfile({ name: registeredUser.fullName, email: registeredUser.email });
+          navigation.replace('MainTabs');
+        }
+      } catch (e) {
+        console.error('Auth Error', e);
+        showAlert('System Error', 'Could not complete the request. Please try again later.', 'error');
+      }
     }
   );
 
@@ -40,7 +105,7 @@ export const AuthScreen = () => {
           <View className="w-16 h-16 bg-white rounded-2xl justify-center items-center mb-6">
             <Text className="text-black font-bold text-3xl">L</Text>
           </View>
-          <Text className="text-white text-2xl font-bold mb-2">Welcome to Ledger</Text>
+          <Text className="text-white text-2xl font-bold mb-2">Welcome to Ledge₹</Text>
           <Text className="text-[#A3A3A3] text-center px-4">Send money globally with the real exchange rate</Text>
         </View>
 
@@ -93,13 +158,21 @@ export const AuthScreen = () => {
           <Input 
             label="Password" 
             placeholder={mode === 'signin' ? "Enter your password" : "Create a password"} 
-            secureTextEntry 
+            secureTextEntry={!showPassword} 
             value={values.password}
             onChangeText={(val) => handleChange('password', val)}
             onBlur={() => handleBlur('password')}
             error={errors.password}
             touched={touched.password}
-            rightIcon={<Icon name="eye-outline" size={20} color="#A3A3A3" />}
+            rightIcon={
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon 
+                  name={showPassword ? "eye-off-outline" : "eye-outline"} 
+                  size={20} 
+                  color="#A3A3A3" 
+                />
+              </TouchableOpacity>
+            }
           />
 
           {mode === 'signin' && (
@@ -112,12 +185,21 @@ export const AuthScreen = () => {
             <Input 
               label="Confirm Password" 
               placeholder="Confirm your password" 
-              secureTextEntry 
+              secureTextEntry={!showConfirmPassword} 
               value={values.confirmPassword}
               onChangeText={(val) => handleChange('confirmPassword', val)}
               onBlur={() => handleBlur('confirmPassword')}
               error={errors.confirmPassword}
               touched={touched.confirmPassword}
+              rightIcon={
+                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  <Icon 
+                    name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} 
+                    size={20} 
+                    color="#A3A3A3" 
+                  />
+                </TouchableOpacity>
+              }
             />
           )}
 
@@ -129,6 +211,14 @@ export const AuthScreen = () => {
           </View>
         </View>
       </ScrollView>
+
+      <AlertModal 
+        visible={alertVisible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        type={alertConfig.type}
+        onClose={() => setAlertVisible(false)}
+      />
     </SafeAreaView>
   );
 };

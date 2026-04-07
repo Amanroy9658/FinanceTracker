@@ -5,11 +5,13 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/buttons/Button';
 import { useTheme } from '../theme/ThemeContext';
 import { useUser } from '../context/UserContext';
+import { useNavigation } from '@react-navigation/native';
 
 export const ProfileScreen = () => {
   const [mode, setMode] = useState<'preview' | 'edit'>('preview');
   const { theme, isDark, toggleTheme } = useTheme();
-  const { profile, updateProfile } = useUser();
+  const { profile, updateProfile, logout } = useUser();
+  const navigation = useNavigation<any>();
   
   const [editName, setEditName] = useState(profile.name);
   const [editEmail, setEditEmail] = useState(profile.email);
@@ -19,6 +21,14 @@ export const ProfileScreen = () => {
     setMode('preview');
   };
 
+  const handleLogout = async () => {
+    await logout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Auth' }],
+    });
+  };
+
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       {/* Top Header */}
@@ -26,10 +36,10 @@ export const ProfileScreen = () => {
         <View className="flex-row items-center">
           <View className="w-10 h-10 rounded-xl justify-center items-center mr-3" style={{ backgroundColor: theme.text }}>
             <Text className="font-bold text-lg" style={{ color: theme.background }}>
-              {profile.name ? profile.name.charAt(0).toUpperCase() : 'L'}
+              L
             </Text>
           </View>
-          <Text className="text-xl font-bold" style={{ color: theme.text }}>Ledger</Text>
+          <Text className="text-xl font-bold" style={{ color: theme.text }}>Ledge₹</Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity className="mr-4">
@@ -157,6 +167,17 @@ export const ProfileScreen = () => {
             </View>
           </View>
         )}
+
+        {/* Logout Section */}
+        <View className="mt-12">
+            <Button 
+                title="Logout Account" 
+                onPress={handleLogout} 
+                style={{ backgroundColor: theme.danger + '20' }}
+                textStyle={{ color: theme.danger }}
+            />
+            <Text className="text-center text-gray-500 text-xs mt-4">Version 1.0.0 • Ledger App</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
