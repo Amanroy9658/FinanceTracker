@@ -15,7 +15,6 @@ export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({
 }) => {
   const chartHeight = 160;
   
-  // Custom bars to match the design (multi-colored/gradient)
   const barData = [
     { height: 100, gradient: ['#4ade80', '#2dd4bf'] },
     { height: 140, gradient: ['#4ade80', '#2dd4bf'] },

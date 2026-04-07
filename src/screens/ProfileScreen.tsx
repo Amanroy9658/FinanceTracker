@@ -35,11 +35,11 @@ export const ProfileScreen = () => {
       <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
         <View className="flex-row items-center">
           <View className="w-10 h-10 rounded-xl justify-center items-center mr-3" style={{ backgroundColor: theme.text }}>
-            <Text className="font-bold text-lg" style={{ color: theme.background }}>
+            <Text className="font-lexendBold text-lg" style={{ color: theme.background }}>
               L
             </Text>
           </View>
-          <Text className="text-xl font-bold" style={{ color: theme.text }}>Ledge₹</Text>
+          <Text className="text-xl font-lexendBold" style={{ color: theme.text }}>Ledge₹</Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity className="mr-4">
@@ -57,15 +57,15 @@ export const ProfileScreen = () => {
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 100 }} keyboardShouldPersistTaps="handled">
-        {/* Profile Card / Row */}
+        {/* Profile Card  */}
         <View className="flex-row items-center justify-between mb-8">
             <View className="flex-row items-center">
                 <View className="w-12 h-12 rounded-xl justify-center items-center mr-4" style={{ backgroundColor: theme.text }}>
-                    <Text className="font-bold text-xl" style={{ color: theme.background }}>
+                    <Text className="font-lexendBold text-xl" style={{ color: theme.background }}>
                       {profile.name ? profile.name.charAt(0).toLowerCase() : 's'}
                     </Text>
                 </View>
-                <Text className="text-xl font-bold" style={{ color: theme.text }}>{profile.name}</Text>
+                <Text className="text-xl font-lexendBold" style={{ color: theme.text }}>{profile.name}</Text>
             </View>
         </View>
 
@@ -130,20 +130,20 @@ export const ProfileScreen = () => {
         {mode === 'preview' ? (
           <View className="space-y-6">
             <View className="flex-row items-center">
-              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Total spendings:</Text>
+              <Text className="text-base mr-2 font-poppins" style={{ color: theme.textSecondary }}>Total spendings:</Text>
               <View className="px-2 py-1 rounded-lg" style={{ backgroundColor: theme.success + '20' }}>
-                <Text className="text-base font-bold" style={{ color: theme.success }}>₹2,000</Text>
+                <Text className="text-base font-lexendBold" style={{ color: theme.success }}>₹2,000</Text>
               </View>
             </View>
 
             <View className="flex-row items-center mt-6">
-              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Email :</Text>
-              <Text className="text-base font-medium" style={{ color: theme.text }}>{profile.email}</Text>
+              <Text className="text-base mr-2 font-poppins" style={{ color: theme.textSecondary }}>Email :</Text>
+              <Text className="text-base font-poppinsMedium" style={{ color: theme.text }}>{profile.email}</Text>
             </View>
 
             <View className="flex-row items-center mt-6">
-              <Text className="text-base mr-2" style={{ color: theme.textSecondary }}>Balance :</Text>
-              <Text className="text-base font-bold" style={{ color: theme.text }}>₹20,000</Text>
+              <Text className="text-base mr-2 font-poppins" style={{ color: theme.textSecondary }}>Balance :</Text>
+              <Text className="text-base font-lexendBold" style={{ color: theme.text }}>₹20,000</Text>
             </View>
           </View>
         ) : (

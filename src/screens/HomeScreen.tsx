@@ -45,10 +45,10 @@ export const HomeScreen = () => {
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
       <View className="px-5 pt-10 ">
-        <Text className="text-3xl font-bold" style={{ color: theme.text }}>
+        <Text className="text-3xl font-lexendBold" style={{ color: theme.text }}>
           {greeting}, {profile.name || 'User'}!
         </Text>
-        <Text className="text-base mt-1" style={{ color: theme.textSecondary }}>Track your progress</Text>
+        <Text className="text-base mt-1 font-poppins" style={{ color: theme.textSecondary }}>Track your progress</Text>
       </View>
 
       <MonthPicker 
@@ -57,22 +57,22 @@ export const HomeScreen = () => {
       />
 
       <GradientCard colors={['#E3F5E1', '#7AD1B5']} style={{ marginHorizontal: 20 }}>
-        <Text className="text-black text-base font-medium opacity-70">Total Balance</Text>
-        <Text className="text-black text-4xl font-bold my-2">₹{balance.toFixed(2)}</Text>
+        <Text className="text-black text-base font-poppinsMedium opacity-70">Total Balance</Text>
+        <Text className="text-black text-4xl font-lexendBold my-2">₹{balance.toFixed(2).toLocaleString()}</Text>
         <View className="flex-row justify-between mt-2">
           <View>
-            <Text className="text-black text-sm font-medium opacity-70">Income</Text>
-            <Text className="text-black text-lg font-bold">+₹{totalIncome.toFixed(2)}</Text>
+            <Text className="text-black text-sm font-poppinsMedium opacity-70">Income</Text>
+            <Text className="text-black text-lg font-lexendBold">+₹{totalIncome.toFixed(2)}</Text>
           </View>
           <View>
-            <Text className="text-black text-sm font-medium opacity-70">Expenses</Text>
-            <Text className="text-black text-lg font-bold">-₹{totalExpense.toFixed(2)}</Text>
+            <Text className="text-black text-sm font-poppinsMedium opacity-70">Expenses</Text>
+            <Text className="text-black text-lg font-lexendBold">-₹{totalExpense.toFixed(2)}</Text>
           </View>
         </View>
       </GradientCard>
 
       <View className="px-5 mt-8 mb-3">
-        <Text className="text-xl font-bold" style={{ color: theme.text }}>Recent Transactions</Text>
+        <Text className="text-xl font-lexendBold" style={{ color: theme.text }}>Recent Transactions</Text>
       </View>
 
       {filteredTransactions.length === 0 ? (

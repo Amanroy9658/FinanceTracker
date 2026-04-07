@@ -58,18 +58,18 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             <Icon name={category?.icon || 'cash'} size={20} color="#FFF" />
           </View>
           <View className="flex-1 ml-4">
-            <Text className="text-base font-semibold" style={{ color: theme.text }}>
+            <Text className="text-base font-poppinsMedium" style={{ color: theme.text }}>
               {category?.name || 'Unknown'}
             </Text>
-            <Text className="text-sm mt-1" style={{ color: theme.textSecondary }}>
+            <Text className="text-sm mt-1 font-poppins" style={{ color: theme.textSecondary }}>
               {item.note || 'No note'}
             </Text>
           </View>
           <View className="items-end mr-2">
-            <Text className="text-base font-bold" style={{ color: isIncome ? theme.success : theme.danger }}>
+            <Text className="text-base font-lexendBold" style={{ color: isIncome ? theme.success : theme.danger }}>
               {isIncome ? '+' : '-'}₹{item.amount.toFixed(2)}
             </Text>
-            <Text className="text-[10px] mt-1" style={{ color: theme.textSecondary }}>
+            <Text className="text-[10px] mt-1 font-poppins" style={{ color: theme.textSecondary }}>
               {new Date(item.date).toLocaleDateString()}
             </Text>
           </View>

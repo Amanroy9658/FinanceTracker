@@ -103,16 +103,16 @@ export const AuthScreen = () => {
         {/* Logo / Header */}
         <View className="items-center mb-8">
           <View className="w-16 h-16 bg-white rounded-2xl justify-center items-center mb-6">
-            <Text className="text-black font-bold text-3xl">L</Text>
+            <Text className="text-black font-lexendBold text-3xl">L</Text>
           </View>
-          <Text className="text-white text-2xl font-bold mb-2">Welcome to Ledge₹</Text>
-          <Text className="text-[#A3A3A3] text-center px-4">Send money globally with the real exchange rate</Text>
+          <Text className="text-white text-2xl font-lexendBold mb-2">Welcome to Ledge₹</Text>
+          <Text className="text-[#A3A3A3] text-center px-4 font-poppins">Send money globally with the real exchange rate</Text>
         </View>
 
         {/* Auth Card */}
         <View className="bg-[#1D1B1B] rounded-3xl p-6 shadow-lg m-2 mt-4 pb-8 border border-[#2A2A2A]">
-          <Text className="text-white text-xl font-bold mb-2">Get started</Text>
-          <Text className="text-[#A3A3A3] text-sm mb-6">Sign in to your account or create a new one</Text>
+          <Text className="text-white text-xl font-lexendBold mb-2">Get started</Text>
+          <Text className="text-[#A3A3A3] text-sm mb-6 font-poppins">Sign in to your account or create a new one</Text>
 
           {/* Segmented Control */}
           <View className="flex-row bg-[#111111] border-[1px] border-[#2A2A2A] rounded-full p-1 mb-6">
@@ -120,13 +120,13 @@ export const AuthScreen = () => {
               onPress={() => setMode('signin')}
               className={`flex-1 py-3 rounded-full items-center ${mode === 'signin' ? 'bg-[#2A2A2A]' : ''}`}
             >
-              <Text className={`font-bold ${mode === 'signin' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign In</Text>
+              <Text className={`font-lexendBold ${mode === 'signin' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign In</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => setMode('signup')}
               className={`flex-1 py-3 rounded-full items-center ${mode === 'signup' ? 'bg-[#2A2A2A]' : ''}`}
             >
-              <Text className={`font-bold ${mode === 'signup' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign Up</Text>
+              <Text className={`font-lexendBold ${mode === 'signup' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign Up</Text>
             </TouchableOpacity>
           </View>
 
@@ -177,7 +177,7 @@ export const AuthScreen = () => {
 
           {mode === 'signin' && (
             <TouchableOpacity className="items-end mb-6 mt-1">
-              <Text className="text-white font-bold text-sm">Forgot password?</Text>
+              <Text className="text-white font-lexendBold text-sm">Forgot password?</Text>
             </TouchableOpacity>
           )}
 

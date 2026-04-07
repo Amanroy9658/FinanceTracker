@@ -11,7 +11,7 @@ interface Props {
 export const GradientCard: React.FC<Props> = ({ 
   children, 
   style,
-  colors = ['#4A00E0', '#8E2DE2'] // Default to theme primary/secondary
+  colors = ['#4A00E0', '#8E2DE2'] 
 }) => {
   return (
     <LinearGradient

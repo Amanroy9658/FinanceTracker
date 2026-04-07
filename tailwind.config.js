@@ -10,6 +10,14 @@ module.exports = {
         textMain: '#FAFAFA',
         textMuted: '#A3A3A3',
         brandAccent: '#69CDB9'
+      },
+      fontFamily: {
+        lexend: ["Lexend-Regular"],
+        lexendBold: ["Lexend-Bold"],
+        lexendMedium: ["Lexend-Medium"],
+        poppins: ["Poppins-Regular"],
+        poppinsBold: ["Poppins-Bold"],
+        poppinsMedium: ["Poppins-Medium"],
       }
     },
   },

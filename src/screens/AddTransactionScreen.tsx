@@ -50,7 +50,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
     }
   }, [type, filteredCategories]);
 
-  // SMART CATEGORY PREDICTION (AI-LITE)
+  // SMART CATEGORY PREDICTION 
   React.useEffect(() => {
     if (!values.note) return;
 
@@ -80,7 +80,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
       style={{ backgroundColor: theme.background }}
       contentContainerStyle={{ padding: 20, paddingTop: 60, paddingBottom: 100 }}
     >
-      <Text className="text-3xl font-bold mb-5" style={{ color: theme.text }}>Add Entry</Text>
+      <Text className="text-3xl font-lexendBold mb-5" style={{ color: theme.text }}>Add Entry</Text>
 
       {/* Type Toggle */}
       <View className="flex-row rounded-xl p-1 mb-8" style={{ backgroundColor: theme.border }}>
@@ -89,14 +89,14 @@ export const AddTransactionScreen = ({ navigation }: any) => {
           style={type === 'expense' && { backgroundColor: theme.danger }}
           onPress={() => setType('expense')}
         >
-          <Text className="font-bold text-base" style={type === 'expense' && { color: '#FFF' }}>Expense</Text>
+          <Text className="font-lexendBold text-base" style={type === 'expense' && { color: '#FFF' }}>Expense</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-1 py-3 items-center rounded-lg"
           style={type === 'income' && { backgroundColor: theme.success }}
           onPress={() => setType('income')}
         >
-          <Text className="font-bold text-base" style={type === 'income' && { color: '#FFF' }}>Income</Text>
+          <Text className="font-lexendBold text-base" style={type === 'income' && { color: '#FFF' }}>Income</Text>
         </TouchableOpacity>
       </View>
 
@@ -133,7 +133,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
               onPress={() => handleChange('categoryId', cat.id)}
             >
               <Icon name={cat.icon} size={24} color={cat.color} />
-              <Text className={`mt-2 text-sm ${isSelected ? 'font-bold' : ''}`} style={{ color: theme.text }}>
+              <Text className={`mt-2 text-sm ${isSelected ? 'font-lexendBold' : 'font-poppins'}`} style={{ color: theme.text }}>
                 {cat.name}
               </Text>
             </TouchableOpacity>
@@ -169,7 +169,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
         style={{ backgroundColor: theme.primary }}
         onPress={handleSubmit}
       >
-        <Text className="text-black text-lg font-bold">Save Entry</Text>
+        <Text className="text-black text-lg font-lexendBold">Save Entry</Text>
       </TouchableOpacity>
     </KeyboardAwareScrollView>
   );

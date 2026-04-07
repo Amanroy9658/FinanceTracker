@@ -67,9 +67,9 @@ export const BalancesScreen = () => {
       <View className="px-5 py-4 flex-row justify-between items-center bg-[#0A0A0A]/50">
         <View className="flex-row items-center">
             <View className="bg-white p-1 rounded-lg mr-3 w-8 h-8 items-center justify-center">
-                <Text className="text-[#0A0A0A] font-bold text-xl">L</Text>
+                <Text className="text-[#0A0A0A] font-lexendBold text-xl">L</Text>
             </View>
-            <Text className="text-white text-xl font-bold">Ledger</Text>
+            <Text className="text-white text-xl font-lexendBold">Ledger</Text>
         </View>
         <View className="flex-row items-center gap-x-5">
             <TouchableOpacity>
@@ -92,8 +92,8 @@ export const BalancesScreen = () => {
       >
         {/* Title Section */}
         <Animated.View entering={FadeInUp.delay(100)} className="mt-8 mb-10">
-          <Text className="text-white text-3xl font-bold">Your Balances</Text>
-          <Text className="text-gray-500 text-base mt-2">Manage your multi-currency accounts</Text>
+          <Text className="text-white text-3xl font-lexendBold">Your Balances</Text>
+          <Text className="text-gray-500 text-base mt-2 font-poppins">Manage your multi-currency accounts</Text>
         </Animated.View>
 
         {/* Gauge Chart Section */}
@@ -135,7 +135,7 @@ export const BalancesScreen = () => {
           entering={FadeInUp.delay(500)} 
           className="px-5 mb-8"
         >
-          <Text className="text-white text-lg font-bold mb-4">Financial Goals</Text>
+          <Text className="text-white text-lg font-lexendBold mb-4">Financial Goals</Text>
           <GoalItem 
             title="Emergency Fund" 
             target={50000} 
@@ -159,14 +159,13 @@ export const BalancesScreen = () => {
             className="flex-row items-center justify-center p-5 rounded-3xl"
             style={{ backgroundColor: theme.primary }}
             onPress={() => {
-              // Simulated Export Logic
               alert("Report generated: Ledger_Statement.csv");
             }}
           >
             <Icon name="download-outline" size={24} color="#000" />
-            <Text className="text-black text-lg font-bold ml-2">Download Report (CSV)</Text>
+            <Text className="text-black text-lg font-lexendBold ml-2">Download Report (CSV)</Text>
           </TouchableOpacity>
-          <Text className="text-gray-500 text-center text-xs mt-3">Professional monthly ledger export for your accountant</Text>
+          <Text className="text-gray-500 text-center text-xs mt-3 font-poppins">Professional monthly ledger export for your accountant</Text>
         </Animated.View>
       </ScrollView>
 

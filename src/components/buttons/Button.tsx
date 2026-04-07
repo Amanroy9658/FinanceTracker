@@ -13,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({ title, textStyle, ...props }) =>
       activeOpacity={0.8}
       {...props}
     >
-      <Text className="text-black font-bold text-lg" style={textStyle}>{title}</Text>
+      <Text className="text-black font-lexendBold text-lg" style={textStyle}>{title}</Text>
     </TouchableOpacity>
   );
 };
