@@ -17,6 +17,14 @@ interface ExpenseContextProps {
   addCategory: (c: Category) => void;
   deleteCategory: (id: string) => void;
   isLoading: boolean;
+  // Global Calculated Stats for Performance
+  stats: {
+    totalBalance: number;
+    totalIncome: number;
+    totalExpense: number;
+    savingsRate: number;
+    currentMonthExpense: number;
+  };
 }
 
 const ExpenseContext = createContext<ExpenseContextProps>({
@@ -27,6 +35,13 @@ const ExpenseContext = createContext<ExpenseContextProps>({
   addCategory: () => {},
   deleteCategory: () => {},
   isLoading: true,
+  stats: {
+    totalBalance: 0,
+    totalIncome: 0,
+    totalExpense: 0,
+    savingsRate: 0,
+    currentMonthExpense: 0,
+  }
 });
 
 export const ExpenseProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
@@ -51,6 +66,37 @@ export const ExpenseProvider: React.FC<{children: React.ReactNode}> = ({ childre
     };
     initData();
   }, []);
+
+  // Performance Optimization: Centralized Financial Math
+  const stats = React.useMemo(() => {
+    const now = new Date();
+    let income = 0;
+    let expense = 0;
+    let currentMonthExp = 0;
+
+    transactions.forEach((t) => {
+      const tDate = new Date(t.date);
+      if (t.type === 'income') {
+        income += t.amount;
+      } else {
+        expense += t.amount;
+        if (tDate.getMonth() === now.getMonth() && tDate.getFullYear() === now.getFullYear()) {
+          currentMonthExp += t.amount;
+        }
+      }
+    });
+
+    const balance = income - expense;
+    const sRate = income > 0 ? ((income - expense) / income) * 100 : 0;
+
+    return {
+      totalBalance: balance,
+      totalIncome: income,
+      totalExpense: expense,
+      savingsRate: Math.max(0, Math.min(100, sRate)),
+      currentMonthExpense: currentMonthExp,
+    };
+  }, [transactions]);
 
   const addTransaction = async (t: Transaction) => {
     const updated = [t, ...transactions];
@@ -77,7 +123,16 @@ export const ExpenseProvider: React.FC<{children: React.ReactNode}> = ({ childre
   };
 
   return (
-    <ExpenseContext.Provider value={{ transactions, categories, addTransaction, deleteTransaction, addCategory, deleteCategory, isLoading }}>
+    <ExpenseContext.Provider value={{ 
+      transactions, 
+      categories, 
+      addTransaction, 
+      deleteTransaction, 
+      addCategory, 
+      deleteCategory, 
+      isLoading,
+      stats 
+    }}>
       {children}
     </ExpenseContext.Provider>
   );

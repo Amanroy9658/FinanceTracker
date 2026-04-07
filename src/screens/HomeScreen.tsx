@@ -12,7 +12,7 @@ import { useUser } from '../context/UserContext';
 
 export const HomeScreen = () => {
   const { theme } = useTheme();
-  const { transactions, categories, deleteTransaction } = useExpense();
+  const { transactions, categories, deleteTransaction, stats } = useExpense();
   const { profile } = useUser();
   const navigation = useNavigation<any>();
   const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -33,14 +33,8 @@ export const HomeScreen = () => {
     });
   }, [transactions, selectedMonth]);
 
-  const { totalIncome, totalExpense, balance } = useMemo(() => {
-    let inc = 0, exp = 0;
-    filteredTransactions.forEach(t => {
-      if (t.type === 'income') inc += t.amount;
-      else exp += t.amount;
-    });
-    return { totalIncome: inc, totalExpense: exp, balance: inc - exp };
-  }, [filteredTransactions]);
+  // Using centralized stats for the main card for performance
+  const { totalIncome, totalExpense, totalBalance: balance } = stats;
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>

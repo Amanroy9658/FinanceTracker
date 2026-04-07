@@ -16,7 +16,7 @@ interface TransactionItemProps {
   onDelete: (id: string) => void;
 }
 
-export const TransactionItem: React.FC<TransactionItemProps> = ({ 
+export const TransactionItem: React.FC<TransactionItemProps> = React.memo(({ 
   item, 
   category, 
   onDelete 
@@ -77,4 +77,4 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
       </Swipeable>
     </Animated.View>
   );
-};
+});

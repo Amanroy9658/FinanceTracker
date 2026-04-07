@@ -19,37 +19,8 @@ import Animated, { FadeInUp } from 'react-native-reanimated';
 
 export const BalancesScreen = () => {
   const { theme } = useTheme();
-  const { transactions } = useExpense();
-
-  const { totalBalance, totalIncome, totalExpense, savingsRate, currentMonthTotal } = React.useMemo(() => {
-    const now = new Date();
-    let income = 0;
-    let expense = 0;
-    let currentMonthExp = 0;
-
-    (transactions || []).forEach((t: any) => {
-      const tDate = new Date(t.date);
-      if (t.type === 'income') {
-        income += t.amount;
-      } else {
-        expense += t.amount;
-        if (tDate.getMonth() === now.getMonth() && tDate.getFullYear() === now.getFullYear()) {
-          currentMonthExp += t.amount;
-        }
-      }
-    });
-
-    const balance = income - expense;
-    const sRate = income > 0 ? ((income - expense) / income) * 100 : 0;
-
-    return { 
-      totalBalance: balance, 
-      totalIncome: income, 
-      totalExpense: expense, 
-      savingsRate: Math.max(0, Math.min(100, sRate)), // Clamp between 0-100
-      currentMonthTotal: currentMonthExp 
-    };
-  }, [transactions]);
+  const { transactions, stats } = useExpense();
+  const { totalBalance, totalIncome, totalExpense, savingsRate, currentMonthExpense: currentMonthTotal } = stats;
 
   const savingsTitle = React.useMemo(() => {
     if (savingsRate > 70) return "Excellent Saving!";
