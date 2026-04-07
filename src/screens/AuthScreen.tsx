@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/buttons/Button';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from '../hooks/useForm';
+import { validateEmail, validatePassword, validateRequired } from '../utils/validators';
 
 export const AuthScreen = () => {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const navigation = useNavigation<any>();
+
+  const validationSchema = useMemo(() => ({
+    email: (val: string) => validateEmail(val),
+    password: (val: string) => validatePassword(val),
+    ...(mode === 'signup' ? {
+      fullName: (val: string) => validateRequired(val, 'Full Name'),
+      confirmPassword: (val: string, formValues: any) => {
+        if (!val) return 'Confirm Password is required';
+        if (val !== formValues.password) return 'Passwords do not match';
+        return null;
+      }
+    } : {})
+  }), [mode]);
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useForm(
+    { fullName: '', email: '', password: '', confirmPassword: '' },
+    validationSchema,
+    () => {
+      navigation.replace('MainTabs');
+    }
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-[#0A0A0A]">
@@ -44,15 +67,38 @@ export const AuthScreen = () => {
 
           {/* Form Fields */}
           {mode === 'signup' && (
-            <Input label="Full Name" placeholder="Enter your full name" />
+            <Input 
+              label="Full Name" 
+              placeholder="Enter your full name" 
+              value={values.fullName}
+              onChangeText={(val) => handleChange('fullName', val)}
+              onBlur={() => handleBlur('fullName')}
+              error={errors.fullName}
+              touched={touched.fullName}
+            />
           )}
 
-          <Input label="Email" placeholder="Enter your email" keyboardType="email-address" autoCapitalize="none" />
+          <Input 
+            label="Email" 
+            placeholder="Enter your email" 
+            keyboardType="email-address" 
+            autoCapitalize="none" 
+            value={values.email}
+            onChangeText={(val) => handleChange('email', val)}
+            onBlur={() => handleBlur('email')}
+            error={errors.email}
+            touched={touched.email}
+          />
           
           <Input 
             label="Password" 
             placeholder={mode === 'signin' ? "Enter your password" : "Create a password"} 
             secureTextEntry 
+            value={values.password}
+            onChangeText={(val) => handleChange('password', val)}
+            onBlur={() => handleBlur('password')}
+            error={errors.password}
+            touched={touched.password}
             rightIcon={<Icon name="eye-outline" size={20} color="#A3A3A3" />}
           />
 
@@ -63,21 +109,24 @@ export const AuthScreen = () => {
           )}
 
           {mode === 'signup' && (
-            <View className="mb-2">
-              <Input 
-                label="Confirm Password" 
-                placeholder="Confirm your password" 
-                secureTextEntry 
-              />
-            </View>
+            <Input 
+              label="Confirm Password" 
+              placeholder="Confirm your password" 
+              secureTextEntry 
+              value={values.confirmPassword}
+              onChangeText={(val) => handleChange('confirmPassword', val)}
+              onBlur={() => handleBlur('confirmPassword')}
+              error={errors.confirmPassword}
+              touched={touched.confirmPassword}
+            />
           )}
 
-          <Button 
-            title={mode === 'signin' ? "Sign In" : "Create Account"} 
-            onPress={() => {
-              navigation.replace('MainTabs');
-            }} 
-          />
+          <View className="mt-4">
+            <Button 
+              title={mode === 'signin' ? "Sign In" : "Create Account"} 
+              onPress={handleSubmit} 
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

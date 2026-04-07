@@ -4,10 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreen } from '../screens/HomeScreen';
-import { StatisticsScreen } from '../screens/StatisticsScreen';
-import { useTheme } from '../theme/ThemeContext';
-
+import { BalancesScreen } from '../screens/BalancesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { useTheme } from '../theme/ThemeContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +44,7 @@ export const BottomTabNavigator = () => {
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Balances" component={StatisticsScreen} />
+        <Tab.Screen name="Balances" component={BalancesScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
 

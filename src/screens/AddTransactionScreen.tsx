@@ -1,51 +1,54 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
 import { useExpense } from '../context/ExpenseContext';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { useForm } from '../hooks/useForm';
+import { validateAmount, validateRequired } from '../utils/validators';
+import { Input } from '../components/ui/Input';
 
 export const AddTransactionScreen = ({ navigation }: any) => {
   const { theme } = useTheme();
   const { categories, addTransaction } = useExpense();
   
   const [type, setType] = useState<'expense' | 'income'>('expense');
-  const [amount, setAmount] = useState('');
-  const [note, setNote] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   const filteredCategories = categories.filter(c => c.type === type);
 
+  const validationSchema = useMemo(() => ({
+    amount: (val: string) => validateAmount(val),
+    categoryId: (val: string) => validateRequired(val, 'Category'),
+    date: (val: string) => validateRequired(val, 'Date'),
+    note: () => null,
+  }), []);
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit, setValues } = useForm(
+    { 
+      amount: '', 
+      categoryId: filteredCategories[0]?.id || '', 
+      date: new Date().toLocaleDateString(), 
+      note: '' 
+    },
+    validationSchema,
+    (formValues) => {
+      addTransaction({
+        id: Date.now().toString(),
+        type,
+        amount: parseFloat(formValues.amount),
+        categoryId: formValues.categoryId,
+        date: formValues.date,
+        note: formValues.note,
+      });
+      navigation.goBack();
+    }
+  );
+
+  // Update category when type changes if current category is not in the new list
   React.useEffect(() => {
-    if (filteredCategories.length > 0 && !filteredCategories.find(c => c.id === selectedCategory)) {
-      setSelectedCategory(filteredCategories[0].id);
+    if (filteredCategories.length > 0 && !filteredCategories.find(c => c.id === values.categoryId)) {
+      handleChange('categoryId', filteredCategories[0].id);
     }
   }, [type, filteredCategories]);
-
-  const handleSave = () => {
-    if (!amount || isNaN(Number(amount))) {
-      Alert.alert('Invalid Amount', 'Please enter a valid number.');
-      return;
-    }
-    if (!selectedCategory) {
-      Alert.alert('Missing Category', 'Please select a category.');
-      return;
-    }
-
-    addTransaction({
-      id: Date.now().toString(),
-      type,
-      amount: parseFloat(amount),
-      categoryId: selectedCategory,
-      date: new Date().toISOString(),
-      note,
-    });
-
-    setAmount('');
-    setNote('');
-    navigation.navigate('Home');
-  };
 
   return (
     <KeyboardAwareScrollView 
@@ -56,7 +59,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
       <Text className="text-3xl font-bold mb-5" style={{ color: theme.text }}>Add Entry</Text>
 
       {/* Type Toggle */}
-      <View className="flex-row rounded-xl p-1 mb-5" style={{ backgroundColor: theme.border }}>
+      <View className="flex-row rounded-xl p-1 mb-8" style={{ backgroundColor: theme.border }}>
         <TouchableOpacity 
           className="flex-1 py-3 items-center rounded-lg"
           style={type === 'expense' && { backgroundColor: theme.danger }}
@@ -73,27 +76,37 @@ export const AddTransactionScreen = ({ navigation }: any) => {
         </TouchableOpacity>
       </View>
 
-      <Text className="text-sm font-semibold mb-2 mt-2" style={{ color: theme.textSecondary }}>Amount</Text>
-      <TextInput
-        className="border-[1px] rounded-xl px-4 py-3 text-lg mb-4"
-        style={{ backgroundColor: theme.card, color: theme.text, borderColor: theme.border }}
+      <Input 
+        label="Amount"
         placeholder="0.00"
-        placeholderTextColor={theme.textSecondary}
         keyboardType="numeric"
-        value={amount}
-        onChangeText={setAmount}
+        value={values.amount}
+        onChangeText={(val) => handleChange('amount', val)}
+        onBlur={() => handleBlur('amount')}
+        error={errors.amount}
+        touched={touched.amount}
       />
 
-      <Text className="text-sm font-semibold mb-2 mt-2" style={{ color: theme.textSecondary }}>Category</Text>
-      <View className="flex-row flex-wrap justify-between mb-4">
+      <Input 
+        label="Date"
+        placeholder="MM/DD/YYYY"
+        value={values.date}
+        onChangeText={(val) => handleChange('date', val)}
+        onBlur={() => handleBlur('date')}
+        error={errors.date}
+        touched={touched.date}
+      />
+
+      <Text className="text-sm font-semibold mb-3 mt-2" style={{ color: theme.textSecondary }}>Category</Text>
+      <View className="flex-row flex-wrap justify-between mb-2">
         {filteredCategories.map(cat => {
-          const isSelected = selectedCategory === cat.id;
+          const isSelected = values.categoryId === cat.id;
           return (
             <TouchableOpacity 
               key={cat.id} 
               className="w-[48%] p-4 rounded-xl border-[1px] items-center mb-3"
               style={{ backgroundColor: theme.card, borderColor: isSelected ? cat.color : theme.border }}
-              onPress={() => setSelectedCategory(cat.id)}
+              onPress={() => handleChange('categoryId', cat.id)}
             >
               <Icon name={cat.icon} size={24} color={cat.color} />
               <Text className={`mt-2 text-sm ${isSelected ? 'font-bold' : ''}`} style={{ color: theme.text }}>
@@ -103,22 +116,23 @@ export const AddTransactionScreen = ({ navigation }: any) => {
           );
         })}
       </View>
+      {errors.categoryId && touched.categoryId && (
+        <Text className="text-red-500 text-xs mb-4 ml-1">{errors.categoryId}</Text>
+      )}
 
-      <Text className="text-sm font-semibold mb-2 mt-2" style={{ color: theme.textSecondary }}>Note (Optional)</Text>
-      <TextInput
-        className="border-[1px] rounded-xl px-4 py-3 text-lg mb-4 h-20"
-        style={{ backgroundColor: theme.card, color: theme.text, borderColor: theme.border }}
+      <Input 
+        label="Note (Optional)"
         placeholder="What was this for?"
-        placeholderTextColor={theme.textSecondary}
         multiline
-        value={note}
-        onChangeText={setNote}
+        style={{ height: 80, textAlignVertical: 'top', paddingTop: 12 }}
+        value={values.note}
+        onChangeText={(val) => handleChange('note', val)}
       />
 
       <TouchableOpacity 
-        className="p-4 rounded-xl items-center mt-5"
+        className="p-5 rounded-2xl items-center mt-8"
         style={{ backgroundColor: theme.primary }}
-        onPress={handleSave}
+        onPress={handleSubmit}
       >
         <Text className="text-white text-lg font-bold">Save Entry</Text>
       </TouchableOpacity>
