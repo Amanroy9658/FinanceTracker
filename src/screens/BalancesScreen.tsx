@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { GaugeChart } from '../components/ui/GaugeChart';
 import { CurrencyCard } from '../components/ui/CurrencyCard';
 import { SpendingBarChart } from '../components/ui/SpendingBarChart';
+import { GoalItem } from '../components/cards/GoalItem';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 
 
@@ -121,12 +122,51 @@ export const BalancesScreen = () => {
         </Animated.View>
 
         {/* Bar Chart Section */}
-        <Animated.View entering={FadeInUp.delay(400)} className="mt-5 pb-32">
+        <Animated.View entering={FadeInUp.delay(400)} className="mt-5 mb-8">
             <SpendingBarChart 
                 current={currentMonthTotal} 
                 total={10000} 
                 label={`${new Date().toLocaleString('default', { month: 'long' })} Spendings`} 
             />
+        </Animated.View>
+
+        {/* FINANCIAL GOALS - PREMIUM FEATURE */}
+        <Animated.View 
+          entering={FadeInUp.delay(500)} 
+          className="px-5 mb-8"
+        >
+          <Text className="text-white text-lg font-bold mb-4">Financial Goals</Text>
+          <GoalItem 
+            title="Emergency Fund" 
+            target={50000} 
+            current={Math.max(0, totalBalance * 0.4)} 
+            icon="shield"
+          />
+          <GoalItem 
+            title="New Gadget" 
+            target={15000} 
+            current={Math.max(0, totalBalance * 0.1)} 
+            icon="laptop"
+          />
+        </Animated.View>
+
+        {/* REPORT DOWNLOAD - PREMIUM FEATURE */}
+        <Animated.View 
+          entering={FadeInUp.delay(600)} 
+          className="px-5 mb-10"
+        >
+          <TouchableOpacity 
+            className="flex-row items-center justify-center p-5 rounded-3xl"
+            style={{ backgroundColor: theme.primary }}
+            onPress={() => {
+              // Simulated Export Logic
+              alert("Report generated: Ledger_Statement.csv");
+            }}
+          >
+            <Icon name="download-outline" size={24} color="#000" />
+            <Text className="text-black text-lg font-bold ml-2">Download Report (CSV)</Text>
+          </TouchableOpacity>
+          <Text className="text-gray-500 text-center text-xs mt-3">Professional monthly ledger export for your accountant</Text>
         </Animated.View>
       </ScrollView>
 

@@ -50,6 +50,30 @@ export const AddTransactionScreen = ({ navigation }: any) => {
     }
   }, [type, filteredCategories]);
 
+  // SMART CATEGORY PREDICTION (AI-LITE)
+  React.useEffect(() => {
+    if (!values.note) return;
+
+    const keywords: { [key: string]: string[] } = {
+      'Food': ['pizza', 'burger', 'zomato', 'swiggy', 'dinner', 'lunch', 'restaurant', 'coffee', 'starbucks', 'maggi'],
+      'Transport': ['uber', 'ola', 'petrol', 'fuel', 'bus', 'train', 'metro', 'auto', 'taxi', 'parking'],
+      'Entertainment': ['netflix', 'movie', 'cinema', 'game', 'spotify', 'party', 'concert', 'club'],
+      'Salary': ['salary', 'bonus', 'dividend', 'interest', 'refund']
+    };
+
+    const lowercaseNote = values.note.toLowerCase();
+    
+    for (const [catName, words] of Object.entries(keywords)) {
+      if (words.some(word => lowercaseNote.includes(word))) {
+        const foundCategory = categories.find(c => c.name === catName);
+        if (foundCategory && foundCategory.id !== values.categoryId) {
+          handleChange('categoryId', foundCategory.id);
+          break;
+        }
+      }
+    }
+  }, [values.note]);
+
   return (
     <KeyboardAwareScrollView 
       className="flex-1"
