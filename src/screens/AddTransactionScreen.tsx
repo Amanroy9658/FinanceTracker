@@ -5,6 +5,7 @@ import { useExpense } from '../context/ExpenseContext';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
 export const AddTransactionScreen = ({ navigation }: any) => {
   const { theme } = useTheme();
   const { categories, addTransaction } = useExpense();

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
 import { useExpense } from '../context/ExpenseContext';
-import { GradientCard } from '../components/GradientCard';
+import { GradientCard } from '../components/cards/GradientCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Transaction } from '../types';
 
