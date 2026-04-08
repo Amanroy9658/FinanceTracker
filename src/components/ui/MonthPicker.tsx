@@ -13,7 +13,6 @@ export const MonthPicker: React.FC<MonthPickerProps> = ({ selectedDate, onChange
   const generateMonths = () => {
     const months = [];
     const today = new Date();
-    // Generate 6 months back, current month, and 1 month forward for context
     for (let i = 6; i >= -1; i--) {
       const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
       months.push(d);

@@ -31,10 +31,10 @@ export const Input: React.FC<InputProps> = ({
       >
         <TextInput 
           className="flex-1 text-base font-poppins"
-          style={{ color: theme.text }}
           placeholderTextColor={theme.textSecondary}
-          textAlignVertical="center"
+          textAlignVertical={props.multiline ? 'top' : 'center'}
           {...props}
+          style={[{ color: theme.text }, props.style]}
         />
         {rightIcon && <View className="ml-2">{rightIcon}</View>}
       </View>
