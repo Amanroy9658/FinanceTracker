@@ -13,7 +13,7 @@ Ledger is a premium, fintech-style mobile application built with React Native CL
 <br/>
 
 <div align="center">
-  <img src="src/assets/screenshots/home.jpeg" width="200"/>
+  <img src="src/assets/screenshots/Home.jpeg" width="200"/>
   <img src="src/assets/screenshots/Balancescreen.jpeg" width="200"/>
   <img src="src/assets/screenshots/profilescreen.jpeg" width="200"/>
 </div>
