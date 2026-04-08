@@ -50,7 +50,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
     }
   }, [type, filteredCategories]);
 
-  // SMART CATEGORY PREDICTION 
+  // Category recognition based on note keywords
   React.useEffect(() => {
     if (!values.note) return;
 
