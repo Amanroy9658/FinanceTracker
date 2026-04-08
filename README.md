@@ -2,6 +2,18 @@
 
 A premium, fintech-style mobile application name Ledger built with React Native CLI. This project demonstrates high-level system design, custom architectural patterns, reusable components and advanced UI interactions.
 
+# Screenshots
+
+![alt text](src/assets/screenshots/Balancescreen.jpeg)
+![alt text](src/assets/screenshots/Loginscreen2.jpeg)
+![alt text](src/assets/screenshots/editprofile.jpeg)
+![alt text](src/assets/screenshots/expense-income.jpeg)
+![alt text](src/assets/screenshots/loginscreen.jpeg)
+![alt text](src/assets/screenshots/profilescreen.jpeg)
+![alt text](src/assets/screenshots/sigupscreen.jpeg)
+![alt text](src/assets/screenshots/splashscreen.jpeg)
+
+
 # Selection Boosters (Advanced Features)....
 1. Custom useForm  Architecture : A decoupled validation engine that handles state, touched tracking, and real-time validation without bloating UI components.
 2. Advanced Gestures : High-performance Swipe-to-Delete implemented with "react-native-gesture-handler" and reanimated for a smooth, native feel.
