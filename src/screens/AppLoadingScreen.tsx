@@ -19,7 +19,6 @@ const AppLoadingScreen = () => {
     const pulseAnim = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
-        // Start entrance animation
         Animated.parallel([
             Animated.timing(fadeAnim, {
                 toValue: 1,

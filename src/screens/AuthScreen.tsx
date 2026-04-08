@@ -18,7 +18,6 @@ export const AuthScreen = () => {
   const navigation = useNavigation<any>();
   const { updateProfile } = useUser();
 
-  // Alert Modal State
   const [alertVisible, setAlertVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'info'}>({
@@ -107,7 +106,6 @@ export const AuthScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#0A0A0A]">
       <ScrollView contentContainerStyle={{ padding: 24, paddingTop: 60 }} keyboardShouldPersistTaps="handled">
-        {/* Logo / Header */}
         <View className="items-center mb-8">
           <View className="w-16 h-16 bg-white rounded-2xl justify-center items-center mb-6">
             <Text className="text-black font-lexendBold text-3xl">L</Text>
@@ -116,12 +114,10 @@ export const AuthScreen = () => {
           <Text className="text-[#A3A3A3] text-center px-4 font-poppins">Send money globally with the real exchange rate</Text>
         </View>
 
-        {/* Auth Card */}
         <View className="bg-[#1D1B1B] rounded-3xl p-6 shadow-lg m-2 mt-4 pb-8 border border-[#2A2A2A]">
           <Text className="text-white text-xl font-lexendBold mb-2">Get started</Text>
           <Text className="text-[#A3A3A3] text-sm mb-6 font-poppins">Sign in to your account or create a new one</Text>
 
-          {/* Segmented Control */}
           <View className="flex-row bg-[#111111] border-[1px] border-[#2A2A2A] rounded-full p-1 mb-6">
             <TouchableOpacity 
               onPress={() => setMode('signin')}
@@ -137,7 +133,6 @@ export const AuthScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Form Fields */}
           {mode === 'signup' && (
             <Input 
               label="Full Name" 

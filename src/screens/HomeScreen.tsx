@@ -33,7 +33,6 @@ export const HomeScreen = () => {
     });
   }, [transactions, selectedMonth]);
 
-  // Using centralized stats for the main card for performance
   const { totalIncome, totalExpense, totalBalance: balance } = stats;
 
   return (
@@ -50,7 +49,7 @@ export const HomeScreen = () => {
         onChange={setSelectedMonth} 
       />
 
-      <GradientCard colors={['#E3F5E1', '#7AD1B5']} style={{ marginHorizontal: 20 }}>
+      <GradientCard colors={['#E3F5E1', '#7AD1B5']} className="mx-5">
         <Text className="text-black text-base font-poppinsMedium opacity-70">Total Balance</Text>
         <Text className="text-black text-4xl font-lexendBold my-2">₹{balance.toFixed(2).toLocaleString()}</Text>
         <View className="flex-row justify-between mt-2">
