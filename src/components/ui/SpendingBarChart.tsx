@@ -30,7 +30,6 @@ export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({
   return (
     <View className="mb-10 p-5 rounded-3xl" style={{ backgroundColor: '#0D0D0D' }}>
       <View className="flex-row items-end justify-between" style={{ height: chartHeight }}>
-        {/* Y-Axis labels */}
         <View className="mr-5 justify-between h-full py-1">
           <Text className="text-gray-600 text-[10px]">₹1000</Text>
           <Text className="text-gray-600 text-[10px]">₹500</Text>

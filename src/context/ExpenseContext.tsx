@@ -17,7 +17,7 @@ interface ExpenseContextProps {
   addCategory: (c: Category) => void;
   deleteCategory: (id: string) => void;
   isLoading: boolean;
-  // Global Calculated Stats for Performance
+  // Global Calculated Stats for Preformance
   stats: {
     totalBalance: number;
     totalIncome: number;
@@ -67,7 +67,7 @@ export const ExpenseProvider: React.FC<{children: React.ReactNode}> = ({ childre
     initData();
   }, []);
 
-  // Performance Optimization: Centralized Financial Math
+  // Performance optimization
   const stats = React.useMemo(() => {
     const now = new Date();
     let income = 0;

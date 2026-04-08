@@ -48,7 +48,7 @@ export const BottomTabNavigator = () => {
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
 
-      {/* Floating Action Button from Figma */}
+      {/* Floating Action Button */}
       <TouchableOpacity 
         onPress={() => navigation.navigate('AddEntry')}
         className="absolute bottom-[90px] right-5 w-14 h-14 rounded-full bg-[#FAFAFA] justify-center items-center"

@@ -52,7 +52,7 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
   const centerX = size / 2;
   const centerY = size / 2;
   
-  // Angle for semi-circle gauge (from -210 to 30 degrees)
+  // Angle for semi-circle gaug
   const startAngle = -210;
   const endAngle = 30;
   const totalAngle = endAngle - startAngle;

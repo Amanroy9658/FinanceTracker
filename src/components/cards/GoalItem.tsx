@@ -28,7 +28,6 @@ export const GoalItem: React.FC<GoalItemProps> = ({ title, target, current }) =>
         </View>
       </View>
 
-      {/* Progress Bar Container */}
       <View className="w-full h-3 bg-[#2A2A2A] rounded-full overflow-hidden">
         {/* Actual Progress */}
         <View 
