@@ -22,6 +22,7 @@ Ledger is a premium, fintech-style mobile application built with React Native CL
 4. SVG Data Visualization : Custom-built Gauge Charts and Gradient Bar Charts utilizing Reanimated Worklets for 60FPS performance.
 5. Modern Styling : Styled entirely with NativeWind (Tailwind CSS) for consistent, maintainable design across all components.
 
+
 # System Architecture
 
 1. State Management : React Context API (ExpenseContext, ThemeContext) for lightweight, efficient global state.

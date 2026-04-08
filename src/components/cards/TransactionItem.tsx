@@ -28,7 +28,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = React.memo(({
     return (
       <TouchableOpacity 
         onPress={() => onDelete(item.id)}
-        className="bg-red-500 justify-center items-center w-20 rounded-2xl mb-3 ml-2"
+        className="bg-red-500 justify-center items-center w-20 rounded-3xl mb-3 ml-2"
       >
         <Icon name="trash-outline" size={24} color="#FFF" />
       </TouchableOpacity>
@@ -48,7 +48,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = React.memo(({
         rightThreshold={40}
       >
         <View 
-          className="flex-row items-center p-4 rounded-2xl mb-3 border-[1px]"
+          className="flex-row items-center p-4 rounded-3xl mb-3 border-[1px]"
           style={{ backgroundColor: theme.card, borderColor: theme.border }}
         >
           <View 
