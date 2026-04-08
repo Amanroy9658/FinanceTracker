@@ -54,8 +54,11 @@ export const AddCategoryScreen = () => {
           <View className="w-10" />
         </View>
 
-        <ScrollView className="flex-1 px-5 pt-4" showsVerticalScrollIndicator={false}>
-          
+        <ScrollView 
+          className="flex-1 px-5 pt-4" 
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
           {/* Type Toggle */}
           <View 
             className="flex-row rounded-full p-1 mb-6" 
@@ -64,16 +67,16 @@ export const AddCategoryScreen = () => {
             <TouchableOpacity 
               onPress={() => setType('expense')}
               className="flex-1 py-3 rounded-full items-center"
-              style={type === 'expense' ? { backgroundColor: theme.card, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 } : {}}
+              style={type === 'expense' ? { backgroundColor: theme.danger, elevation: 4, shadowColor: theme.danger, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 } : {}}
             >
-              <Text className="font-bold" style={{ color: type === 'expense' ? theme.danger : theme.textSecondary }}>Expense</Text>
+              <Text className="font-lexendBold" style={{ color: type === 'expense' ? '#FFF' : theme.textSecondary }}>Expense</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => setType('income')}
               className="flex-1 py-3 rounded-full items-center"
-              style={type === 'income' ? { backgroundColor: theme.card, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 } : {}}
+              style={type === 'income' ? { backgroundColor: theme.success, elevation: 4, shadowColor: theme.success, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 } : {}}
             >
-              <Text className="font-bold" style={{ color: type === 'income' ? theme.success : theme.textSecondary }}>Income</Text>
+              <Text className="font-lexendBold" style={{ color: type === 'income' ? '#FFF' : theme.textSecondary }}>Income</Text>
             </TouchableOpacity>
           </View>
 

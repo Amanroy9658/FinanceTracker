@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm } from '../hooks/useForm';
 import { validateEmail, validatePassword, validateRequired } from '../utils/validators';
 import { useUser } from '../context/UserContext';
+import { useTheme } from '../theme/ThemeContext';
 import { AlertModal } from '../components/modals/AlertModal';
 
 export const AuthScreen = () => {
@@ -17,6 +18,7 @@ export const AuthScreen = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigation = useNavigation<any>();
   const { updateProfile } = useUser();
+  const { theme } = useTheme();
 
   const [alertVisible, setAlertVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -104,32 +106,34 @@ export const AuthScreen = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-[#0A0A0A]">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScrollView contentContainerStyle={{ padding: 24, paddingTop: 60 }} keyboardShouldPersistTaps="handled">
         <View className="items-center mb-8">
-          <View className="w-16 h-16 bg-white rounded-2xl justify-center items-center mb-6">
-            <Text className="text-black font-lexendBold text-3xl">L</Text>
+          <View className="w-16 h-16 rounded-2xl justify-center items-center mb-6" style={{ backgroundColor: theme.text }}>
+            <Text className="font-lexendBold text-3xl" style={{ color: theme.background }}>L</Text>
           </View>
-          <Text className="text-white text-2xl font-lexendBold mb-2">Welcome to Ledge₹</Text>
-          <Text className="text-[#A3A3A3] text-center px-4 font-poppins">Send money globally with the real exchange rate</Text>
+          <Text className="text-2xl font-lexendBold mb-2" style={{ color: theme.text }}>Welcome to Ledge₹</Text>
+          <Text className="text-center px-4 font-poppins" style={{ color: theme.textSecondary }}>Send money globally with the real exchange rate</Text>
         </View>
 
-        <View className="bg-[#1D1B1B] rounded-3xl p-6 shadow-lg m-2 mt-4 pb-8 border border-[#2A2A2A]">
-          <Text className="text-white text-xl font-lexendBold mb-2">Get started</Text>
-          <Text className="text-[#A3A3A3] text-sm mb-6 font-poppins">Sign in to your account or create a new one</Text>
+        <View className="rounded-3xl p-6 shadow-lg m-2 mt-4 pb-8 border-[1px]" style={{ backgroundColor: theme.card, borderColor: theme.border }}>
+          <Text className="text-xl font-lexendBold mb-2" style={{ color: theme.text }}>Get started</Text>
+          <Text className="text-sm mb-6 font-poppins" style={{ color: theme.textSecondary }}>Sign in to your account or create a new one</Text>
 
-          <View className="flex-row bg-[#111111] border-[1px] border-[#2A2A2A] rounded-full p-1 mb-6">
+          <View className="flex-row border-[1px] rounded-full p-1 mb-6" style={{ backgroundColor: theme.surface, borderColor: theme.border }}>
             <TouchableOpacity 
               onPress={() => setMode('signin')}
-              className={`flex-1 py-3 rounded-full items-center ${mode === 'signin' ? 'bg-[#2A2A2A]' : ''}`}
+              className="flex-1 py-3 rounded-full items-center"
+              style={mode === 'signin' ? { backgroundColor: theme.border } : {}}
             >
-              <Text className={`font-lexendBold ${mode === 'signin' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign In</Text>
+              <Text className="font-lexendBold" style={{ color: mode === 'signin' ? theme.text : theme.textSecondary }}>Sign In</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => setMode('signup')}
-              className={`flex-1 py-3 rounded-full items-center ${mode === 'signup' ? 'bg-[#2A2A2A]' : ''}`}
+              className="flex-1 py-3 rounded-full items-center"
+              style={mode === 'signup' ? { backgroundColor: theme.border } : {}}
             >
-              <Text className={`font-lexendBold ${mode === 'signup' ? 'text-white' : 'text-[#A3A3A3]'}`}>Sign Up</Text>
+              <Text className="font-lexendBold" style={{ color: mode === 'signup' ? theme.text : theme.textSecondary }}>Sign Up</Text>
             </TouchableOpacity>
           </View>
 
@@ -179,7 +183,7 @@ export const AuthScreen = () => {
 
           {mode === 'signin' && (
             <TouchableOpacity className="items-end mb-6 mt-1">
-              <Text className="text-white font-lexendBold text-sm">Forgot password?</Text>
+              <Text className="font-lexendBold text-sm" style={{ color: theme.text }}>Forgot password?</Text>
             </TouchableOpacity>
           )}
 
@@ -198,7 +202,7 @@ export const AuthScreen = () => {
                   <Icon 
                     name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} 
                     size={20} 
-                    color="#A3A3A3" 
+                    color={theme.textSecondary} 
                   />
                 </TouchableOpacity>
               }

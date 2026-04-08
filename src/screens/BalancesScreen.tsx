@@ -31,25 +31,25 @@ export const BalancesScreen = () => {
   }, [savingsRate]);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#0A0A0A]">
-      <StatusBar barStyle="light-content" />
+    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+      <StatusBar barStyle={theme.background === '#0A0A0A' ? 'light-content' : 'dark-content'} />
       
       {/* Header */}
-      <View className="px-5 py-4 flex-row justify-between items-center bg-[#0A0A0A]/50">
+      <View className="px-5 py-4 flex-row justify-between items-center" style={{ backgroundColor: theme.surface }}>
         <View className="flex-row items-center">
-            <View className="bg-white p-1 rounded-lg mr-3 w-8 h-8 items-center justify-center">
-                <Text className="text-[#0A0A0A] font-lexendBold text-xl">L</Text>
+            <View className="p-1 rounded-lg mr-3 w-8 h-8 items-center justify-center" style={{ backgroundColor: theme.text }}>
+                <Text className="font-lexendBold text-xl" style={{ color: theme.background }}>L</Text>
             </View>
-            <Text className="text-white text-xl font-lexendBold">Ledger</Text>
+            <Text className="text-xl font-lexendBold" style={{ color: theme.text }}>Ledger</Text>
         </View>
         <View className="flex-row items-center gap-x-5">
             <TouchableOpacity>
-                <Icon name="search-outline" size={24} color="#FFF" />
+                <Icon name="search-outline" size={24} color={theme.text} />
             </TouchableOpacity>
             <TouchableOpacity>
                 <View className="relative">
-                    <Icon name="notifications-outline" size={24} color="#FFF" />
-                    <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center border-2 border-[#0A0A0A]">
+                    <Icon name="notifications-outline" size={24} color={theme.text} />
+                    <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center" style={{ borderColor: theme.background, borderWidth: 2 }}>
                         <Text className="text-white text-[8px] font-bold">2</Text>
                     </View>
                 </View>
@@ -61,10 +61,9 @@ export const BalancesScreen = () => {
         className="flex-1 px-5" 
         showsVerticalScrollIndicator={false}
       >
-        {/* Title Section */}
         <Animated.View entering={FadeInUp.delay(100)} className="mt-8 mb-10">
-          <Text className="text-white text-3xl font-lexendBold">Your Balances</Text>
-          <Text className="text-gray-500 text-base mt-2 font-poppins">Manage your multi-currency accounts</Text>
+          <Text className="text-3xl font-lexendBold" style={{ color: theme.text }}>Your Balances</Text>
+          <Text className="text-base mt-2 font-poppins" style={{ color: theme.textSecondary }}>Manage your multi-currency accounts</Text>
         </Animated.View>
 
         {/* Gauge Chart Section */}
@@ -80,7 +79,7 @@ export const BalancesScreen = () => {
         {/* Available Currencies */}
         <Animated.View entering={FadeInUp.delay(300)} className="mt-8">
             <View className="flex-row justify-between items-center mb-5">
-                <Text className="text-white text-xl font-bold">Available Currencies</Text>
+                <Text className="text-xl font-bold" style={{ color: theme.text }}>Available Currencies</Text>
             </View>
             
             <CurrencyCard 
@@ -106,7 +105,7 @@ export const BalancesScreen = () => {
           entering={FadeInUp.delay(500)} 
           className="px-5 mb-8"
         >
-          <Text className="text-white text-lg font-lexendBold mb-4">Financial Goals</Text>
+          <Text className="text-lg font-lexendBold mb-4" style={{ color: theme.text }}>Financial Goals</Text>
           <GoalItem 
             title="Emergency Fund" 
             target={50000} 
@@ -133,10 +132,10 @@ export const BalancesScreen = () => {
               alert("Report generated: Ledger_Statement.csv");
             }}
           >
-            <Icon name="download-outline" size={24} color="#000" />
-            <Text className="text-black text-lg font-lexendBold ml-2">Download Report (CSV)</Text>
+            <Icon name="download-outline" size={24} color={theme.background} />
+            <Text className="text-lg font-lexendBold ml-2" style={{ color: theme.background }}>Download Report (CSV)</Text>
           </TouchableOpacity>
-          <Text className="text-gray-500 text-center text-xs mt-3 font-poppins">Professional monthly ledger export for your accountant</Text>
+          <Text className="text-center text-xs mt-3 font-poppins" style={{ color: theme.textSecondary }}>Professional monthly ledger export for your accountant</Text>
         </Animated.View>
       </ScrollView>
 

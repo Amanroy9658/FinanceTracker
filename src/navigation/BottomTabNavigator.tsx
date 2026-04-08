@@ -15,14 +15,14 @@ export const BottomTabNavigator = () => {
   const navigation = useNavigation<any>();
 
   return (
-    <View className="flex-1 bg-[#0A0A0A]">
+    <View className="flex-1" style={{ backgroundColor: theme.background }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: 'rgba(10, 10, 10, 0.95)',
+            backgroundColor: theme.card,
             borderTopWidth: 0.53,
-            borderTopColor: '#000000',
+            borderTopColor: theme.border,
             elevation: 0,
             height: 64,
             paddingBottom: 8,
@@ -51,8 +51,9 @@ export const BottomTabNavigator = () => {
       {/* Floating Action Button */}
       <TouchableOpacity 
         onPress={() => navigation.navigate('AddEntry')}
-        className="absolute bottom-[90px] right-5 w-14 h-14 rounded-full bg-[#FAFAFA] justify-center items-center"
+        className="absolute bottom-[90px] right-5 w-14 h-14 rounded-full justify-center items-center"
         style={{
+          backgroundColor: theme.primary,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 10 },
           shadowOpacity: 0.25,
@@ -60,7 +61,7 @@ export const BottomTabNavigator = () => {
           elevation: 5,
         }}
       >
-        <Icon name="add" size={32} color="#0A0A0A" />
+        <Icon name="add" size={32} color={theme.background} />
       </TouchableOpacity>
     </View>
   );

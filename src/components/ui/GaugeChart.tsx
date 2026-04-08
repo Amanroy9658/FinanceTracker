@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Path, Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
+import { useTheme } from '../../theme/ThemeContext';
 import Animated, { 
   useAnimatedProps, 
   useSharedValue, 
@@ -51,6 +52,7 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
   const radius = (size - strokeWidth) / 2;
   const centerX = size / 2;
   const centerY = size / 2;
+  const { theme } = useTheme();
   
   // Angle for semi-circle gaug
   const startAngle = -210;
@@ -99,7 +101,7 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
         {/* Background Track */}
         <Path
           d={backgroundPath}
-          stroke="#1F1F1F"
+          stroke={theme.border}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           fill="none"
@@ -118,17 +120,17 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
         <AnimatedCircle
           animatedProps={animatedDotProps}
           r={strokeWidth / 2 - 2}
-          fill="white"
-          stroke="#0A0A0A"
+          fill={theme.text}
+          stroke={theme.background}
           strokeWidth={2}
         />
       </Svg>
       
       <View className="absolute items-center top-[30%]">
-        <Text className="text-7xl font-bold text-white tracking-tighter">{value}</Text>
+        <Text className="text-7xl font-bold tracking-tighter" style={{ color: theme.text }}>{value}</Text>
         <View className="mt-4 items-center px-4 text-center">
-            <Text className="text-gray-400 text-base font-semibold text-center">{title}</Text>
-            <Text className="text-gray-500 text-xs mt-1">{subtitle}</Text>
+            <Text className="text-base font-semibold text-center" style={{ color: theme.textSecondary }}>{title}</Text>
+            <Text className="text-xs mt-1" style={{ color: theme.textSecondary }}>{subtitle}</Text>
         </View>
       </View>
     </View>

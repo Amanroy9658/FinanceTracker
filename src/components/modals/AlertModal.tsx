@@ -43,7 +43,8 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     >
       <View className="flex-1 bg-black/85 justify-center items-center px-6">
         <View 
-          className="w-full max-w-[340px] bg-[#1D1B1B] border-[#2A2A2A] rounded-[32px] border-[1px] p-8 shadow-2xl items-center"
+          className="w-full max-w-[340px] rounded-[32px] border-[1px] p-8 shadow-2xl items-center"
+          style={{ backgroundColor: theme.card, borderColor: theme.border }}
         >
           <View 
             className="w-20 h-20 rounded-full items-center justify-center mb-6"
@@ -52,15 +53,15 @@ export const AlertModal: React.FC<AlertModalProps> = ({
             <Icon name={icon.name} size={44} color={icon.color} />
           </View>
 
-          <Text className="text-white text-2xl font-bold mb-3 text-center">{title}</Text>
-          <Text className="text-gray-400 text-base text-center mb-8 px-2">{message}</Text>
+          <Text className="text-2xl font-bold mb-3 text-center" style={{ color: theme.text }}>{title}</Text>
+          <Text className="text-base text-center mb-8 px-2" style={{ color: theme.textSecondary }}>{message}</Text>
 
           <View className="w-full">
             <Button 
                 title="Okay" 
                 onPress={onClose} 
                 style={{ backgroundColor: theme.primary }}
-                textStyle={{ color: '#000' }}
+                textStyle={{ color: theme.background }}
             />
           </View>
         </View>

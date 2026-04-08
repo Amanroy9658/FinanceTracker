@@ -86,17 +86,17 @@ export const AddTransactionScreen = ({ navigation }: any) => {
       <View className="flex-row rounded-xl p-1 mb-8" style={{ backgroundColor: theme.border }}>
         <TouchableOpacity 
           className="flex-1 py-3 items-center rounded-lg"
-          style={type === 'expense' && { backgroundColor: theme.danger }}
+          style={type === 'expense' ? { backgroundColor: theme.danger } : {}}
           onPress={() => setType('expense')}
         >
-          <Text className="font-lexendBold text-base" style={type === 'expense' && { color: '#FFF' }}>Expense</Text>
+          <Text className="font-lexendBold text-base" style={{ color: type === 'expense' ? '#FFF' : theme.textSecondary }}>Expense</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-1 py-3 items-center rounded-lg"
-          style={type === 'income' && { backgroundColor: theme.success }}
+          style={type === 'income' ? { backgroundColor: theme.success } : {}}
           onPress={() => setType('income')}
         >
-          <Text className="font-lexendBold text-base" style={type === 'income' && { color: '#FFF' }}>Income</Text>
+          <Text className="font-lexendBold text-base" style={{ color: type === 'income' ? '#FFF' : theme.textSecondary }}>Income</Text>
         </TouchableOpacity>
       </View>
 
@@ -169,7 +169,7 @@ export const AddTransactionScreen = ({ navigation }: any) => {
         style={{ backgroundColor: theme.primary }}
         onPress={handleSubmit}
       >
-        <Text className="text-black text-lg font-lexendBold">Save Entry</Text>
+        <Text className="text-lg font-lexendBold" style={{ color: theme.background }}>Save Entry</Text>
       </TouchableOpacity>
     </KeyboardAwareScrollView>
   );

@@ -21,14 +21,14 @@ export const GoalItem: React.FC<GoalItemProps> = ({ title, target, current }) =>
       <View className="flex-row justify-between items-center mb-3">
         <View>
           <Text className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">{title}</Text>
-          <Text className="text-white text-xl font-bold">₹{current.toLocaleString()} <Text className="text-sm font-normal text-gray-500">/ ₹{target.toLocaleString()}</Text></Text>
+          <Text className="text-xl font-bold" style={{ color: theme.text }}>₹{current.toLocaleString()} <Text className="text-sm font-normal" style={{ color: theme.textSecondary }}>/ ₹{target.toLocaleString()}</Text></Text>
         </View>
         <View className="bg-green-500/10 px-3 py-1 rounded-full">
             <Text className="text-green-500 font-bold text-xs">{percentage.toFixed(0)}%</Text>
         </View>
       </View>
 
-      <View className="w-full h-3 bg-[#2A2A2A] rounded-full overflow-hidden">
+      <View className="w-full h-3 rounded-full overflow-hidden" style={{ backgroundColor: theme.surface }}>
         {/* Actual Progress */}
         <View 
           className="h-full bg-green-500 rounded-full"
