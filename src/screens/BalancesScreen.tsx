@@ -140,7 +140,7 @@ export const BalancesScreen = () => {
         </Animated.View>
       </ScrollView>
 
-      {/* Note: The Floating Action Button (FAB) is already part of the BottomTabNavigator */}
+      {/*Floating Action Button (FAB) is already part of the BottomTabNavigator */}
     </SafeAreaView>
   );
 };
