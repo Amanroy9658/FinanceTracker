@@ -6,14 +6,19 @@ A premium, fintech-style mobile application name Ledger built with React Native 
 
 
 <p style="text-align:center;">
-  <img src="src/assets/screenshots/Balancescreen.jpeg" width="250"/>
+  <img src="src/assets/screenshots/splashscreen.jpeg" width="250"/>
+  <img src="src/assets/screenshots/loginscreen.jpeg" width="250"/>
+  <img src="src/assets/screenshots/sigupscreen.jpeg" width="250"/>
   <img src="src/assets/screenshots/Loginscreen2.jpeg" width="250"/>
+  <img src="src/assets/screenshots/home.jpeg" width="250"/>
+  <img src="src/assets/screenshots/Balancescreen.jpeg" width="250"/>
+  <img src="src/assets/screenshots/profilescreen.jpeg" width="250"/>
   <img src="src/assets/screenshots/editprofile.jpeg" width="250"/>
   <img src="src/assets/screenshots/expense-income.jpeg" width="250"/>
-  <img src="src/assets/screenshots/loginscreen.jpeg" width="250"/>
-  <img src="src/assets/screenshots/profilescreen.jpeg" width="250"/>
-  <img src="src/assets/screenshots/sigupscreen.jpeg" width="250"/>
-  <img src="src/assets/screenshots/splashscreen.jpeg" width="250"/>
+  
+  
+  
+  
 </p>
 
 
