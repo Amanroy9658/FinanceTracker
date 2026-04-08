@@ -36,7 +36,7 @@ A premium, fintech-style mobile application name Ledger built with React Native 
    npm run ios
 
 # Build Delivery
-Generate a debug APK for immediate testing:
+Generate an APK for immediate testing:
 cd android && ./gradlew asssembleRelease
 
 Generate a build for release:
